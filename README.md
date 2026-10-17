@@ -9,7 +9,6 @@
 - add image and video components
 - add embed component
 - add table component
-- add tabs (should hold whatever children they want in each)
 - add expandable component
 - add stepper component
 - add api reference component?

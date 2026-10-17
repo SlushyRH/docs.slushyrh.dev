@@ -9,3 +9,4 @@ export * from "./quote";
 export * from "./columns";
 export * from "./card";
 export * from "./scroll-area";
+export * from "./tabs";
