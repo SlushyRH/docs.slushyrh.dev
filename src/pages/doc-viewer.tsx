@@ -2,6 +2,7 @@ import { Sidebar } from "@/components/widgets/sidebar";
 import { allPages, folders, projects } from "@/content/_index";
 import { Helmet } from "react-helmet-async";
 import { Navigate, useParams } from "react-router-dom";
+import { NotFoundPage } from "./404";
 
 function PageNotFound({ projectId, projectMeta }: { projectId: string, projectMeta: any }) {
   return (
@@ -18,12 +19,16 @@ function PageNotFound({ projectId, projectMeta }: { projectId: string, projectMe
 export function DocViewerPage() {
   const { projectId, '*': docPath } = useParams<{ projectId: string; '*': string; }>();
   const projectMeta = projects[projectId || ''];
+  
+  // if project dont exist, show 404
+  if (!projectMeta)
+    return <NotFoundPage />
 
   // handle base project redirect
   if (!docPath || docPath.trim() === '')
     return <Navigate to={`/${projectId}/${projectMeta.redirectSlug}`} replace />;
 
-  // Hhandle folder root redirects
+  // handle folder root redirects
   const folderMeta = folders[docPath];
   if (folderMeta && folderMeta.redirectSlug)
     return <Navigate to={`/${projectId}/${docPath}/${folderMeta.redirectSlug}`} replace />;
