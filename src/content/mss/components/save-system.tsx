@@ -1,10 +1,10 @@
-import { Paragraph, Title } from "@/components/ui";
+import { Paragraph, Heading } from "@/components/ui";
 import type { DocPageMeta } from "@/lib/types";
 
 function Content() {
   return (
     <>
-      <Title>Save System</Title>
+      <Heading>Save System</Heading>
       <Paragraph>Paragraph about the save system</Paragraph>
     </>
   )
