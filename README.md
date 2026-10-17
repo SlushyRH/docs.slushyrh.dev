@@ -1,6 +1,5 @@
 # todo
 - add multiple sizes for  paragraphs
-- add a 'On This Page' sidebar on the right
 - add previous and next page buttons at the bottom
 - add working search bar (clicking it should bring a block up that shows results as they type)
 - add checkbox component (user can't click it)

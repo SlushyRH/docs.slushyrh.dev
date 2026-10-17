@@ -27,9 +27,14 @@ interface HeadingProps {
 }
 
 export function Heading({ children, size = "h1", className = "" }: HeadingProps & VariantProps<typeof headingVariants>) {
+  const Tag = size || "h1";
+
   return (
-    <h1 className={cn(headingVariants({ size, className }))}>
+    <Tag 
+      data-size={size} 
+      className={cn(headingVariants({ size, className }))}
+    >
       {children}
-    </h1>
+    </Tag>
   );
 }
