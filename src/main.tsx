@@ -6,6 +6,8 @@ import { DocViewerPage } from './pages/doc-viewer';
 import { NotFoundPage } from './pages/404';
 import { HelmetProvider } from 'react-helmet-async';
 
+import './main.css';
+
 const RootLayout = () => (
   <>
     <Outlet />

@@ -6,12 +6,27 @@ export interface Link {
   icon?: IconType | null;
 }
 
+export interface DocSectionMeta {
+  id: string;
+  label: string;
+}
+
 export interface ProjectMeta {
   slug: string;
   title: string;
   description: string;
   redirectSlug: string;
+  sections?: DocSectionMeta[] | null;
   links?: Link[] | null;
+}
+
+export interface DocFolderMeta {
+  slug: string;
+  label: string;
+  collapsable: boolean;
+  redirectSlug: string;
+  order?: number;
+  section?: string;
 }
 
 export interface DocPageMeta {
@@ -19,4 +34,5 @@ export interface DocPageMeta {
   label: string;
   Content: React.FC;
   order?: number;
+  section?: string;
 }
