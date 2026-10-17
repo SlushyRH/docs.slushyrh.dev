@@ -4,8 +4,8 @@ import type { DocPageMeta } from "@/lib/types";
 function Content() {
   return (
     <>
-      <Title>Title</Title>
-      <Paragraph>Paragraph</Paragraph>
+      <Title>Getting Started</Title>
+      <Paragraph>Paragraph here about getting started</Paragraph>
     </>
   )
 }

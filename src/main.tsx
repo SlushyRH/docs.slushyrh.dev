@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
-      { path: '/:project/*', element: <DocViewerPage /> },
+      { path: '/:projectId/*', element: <DocViewerPage /> },
       { path: '*', element: <NotFoundPage /> },
     ]
   }

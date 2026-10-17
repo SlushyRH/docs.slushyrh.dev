@@ -4,6 +4,7 @@ const projectMeta: ProjectMeta = {
   slug: 'mss',
   title: 'Modular Save System',
   description: 'A flexible and modular save system for Unity.',
+  redirectSlug: 'getting-started',
   links: [
     { title: 'Github', url: 'https://github.com/SlushyRH/Modular-Save-System' }
   ]

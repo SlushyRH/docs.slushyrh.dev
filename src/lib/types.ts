@@ -10,6 +10,7 @@ export interface ProjectMeta {
   slug: string;
   title: string;
   description: string;
+  redirectSlug: string;
   links?: Link[] | null;
 }
 
