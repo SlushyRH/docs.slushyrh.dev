@@ -2,15 +2,15 @@ import { useState } from "react";
 import { LuChevronDown, LuChevronRight } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
 
-export default function SidebarItem({ item, projectId }: { item: any, projectId: string }) {
+export default function SidebarItem({ item, projectId, onClose }: { item: any, projectId: string, onClose?: () => void }) {
   const [isOpen, setIsOpen] = useState(true);
-  console.log(item);
 
   if (item.type === 'page') {
     return (
       <li>
         <NavLink
           to={`/${projectId}/${item.path}`}
+          onClick={onClose}
           className={({ isActive }) => 
             `block px-3 py-1.5 text-sm rounded-md transition-colors ${
               isActive ? 'bg-zinc-800 text-white font-medium' : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50'
@@ -21,7 +21,7 @@ export default function SidebarItem({ item, projectId }: { item: any, projectId:
         </NavLink>
       </li>
     );
-  }else if (item.type === 'folder') {
+  } else if (item.type === 'folder') {
     const isCollapsable = item.meta?.collapsable ?? false;
 
     return (
@@ -42,6 +42,7 @@ export default function SidebarItem({ item, projectId }: { item: any, projectId:
               <li key={idx}>
                 <NavLink
                   to={`/${projectId}/${page.path}`}
+                  onClick={onClose}
                   className={({ isActive }) => 
                     `block px-3 py-1.5 text-sm rounded-md transition-colors ${
                       isActive ? 'text-indigo-400 font-medium' : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50'

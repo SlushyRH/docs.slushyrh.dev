@@ -1,13 +1,16 @@
 import type { ProjectMeta } from '@/lib/types';
 import { allPages, folders } from '@/content/_index'; 
 import SidebarItem from './sidebar-item';
+import { LuX } from 'react-icons/lu';
 
 interface SidebarProps {
   projectId: string;
   projectMeta: ProjectMeta;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-export function Sidebar({ projectId, projectMeta }: SidebarProps) {  
+export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProps) {
   const projectPages = Object.entries(allPages)
     .filter(([_, pageData]) => pageData.projectId === projectId)
     .map(([path, pageData]) => ({ path, ...pageData.data }));
@@ -66,40 +69,62 @@ export function Sidebar({ projectId, projectMeta }: SidebarProps) {
   });
 
   return (
-    <aside className="w-64 border-r border-zinc-800 p-4 hidden lg:block overflow-y-auto h-[calc(100vh-4rem)] sticky top-16">
-      <div className="mb-6 font-bold text-lg">{projectMeta.title}</div>
-      
-      <nav className="space-y-2">
-        {/* root items (no sections) */}
-        {tree['root']?.length > 0 && (
-          <div className="mb-4">
-            <ul className="space-y-1">
-              {tree['root'].map((item, idx) => (
-                <SidebarItem key={`root-${idx}`} item={item} projectId={projectId} />
-              ))}
-            </ul>
-          </div>
-        )}
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          onClick={onClose}
+        />
+      )}
 
-        {/* sections */}
-        {sections.map(section => {
-          const items = tree[section.id];
-          if (!items || items.length === 0) return null;
+      {/* Sidebar Panel */}
+      <aside className={`fixed inset-y-0 left-0 z-50 w-64 transform overflow-y-auto border-r border-zinc-800 bg-[#1e1e1e] p-4 transition-transform duration-300 ease-in-out lg:sticky lg:top-14 lg:z-0 lg:block lg:h-[calc(100vh-3.5rem)] ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+        
+        {/* Mobile Header with Close Button */}
+        <div className="mb-6 flex items-center justify-between lg:hidden">
+          <span className="font-bold text-lg">{projectMeta.title}</span>
+          <button 
+            onClick={onClose}
+            className="rounded-md p-2 text-neutral-400 hover:bg-white/10 hover:text-white"
+          >
+            <LuX size={20} />
+          </button>
+        </div>
 
-          return (
-            <div key={section.id} className="mt-8">
-              <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
-                {section.label}
-              </h4>
+        {/* Desktop Title */}
+        <div className="mb-6 hidden font-bold text-lg lg:block">{projectMeta.title}</div>
+        
+        <nav className="space-y-2">
+          {tree['root']?.length > 0 && (
+            <div className="mb-4">
               <ul className="space-y-1">
-                {items.map((item, idx) => (
-                  <SidebarItem key={idx} item={item} projectId={projectId} />
+                {tree['root'].map((item, idx) => (
+                  <SidebarItem key={`root-${idx}`} item={item} projectId={projectId} onClose={onClose} />
                 ))}
               </ul>
             </div>
-          );
-        })}
-      </nav>
-    </aside>
+          )}
+
+          {sections.map(section => {
+            const items = tree[section.id];
+            if (!items || items.length === 0) return null;
+
+            return (
+              <div key={section.id} className="mt-8">
+                <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+                  {section.label}
+                </h4>
+                <ul className="space-y-1">
+                  {items.map((item, idx) => (
+                    <SidebarItem key={idx} item={item} projectId={projectId} onClose={onClose} />
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </nav>
+      </aside>
+    </>
   );
 }

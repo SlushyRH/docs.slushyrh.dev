@@ -13,6 +13,7 @@ export interface DocSectionMeta {
 
 export interface ProjectMeta {
   slug: string;
+  logoUrl?: string;
   title: string;
   description: string;
   redirectSlug: string;

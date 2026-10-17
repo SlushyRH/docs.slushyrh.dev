@@ -1,23 +1,17 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-
-import { DocViewerPage } from './pages/doc-viewer';
-import { NotFoundPage } from './pages/404';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
-import './main.css';
+import { DocViewerPage } from '@/pages/doc-viewer';
+import { NotFoundPage } from '@/pages/404';
+import { ThemeProvider } from '@/components/providers/theme-provider';
 
-const RootLayout = () => (
-  <>
-    <Outlet />
-  </>
-);
+import './main.css';
 
 const root = createRoot(document.getElementById('root')!);
 const router = createBrowserRouter([
   {
-    element: <RootLayout />,
     children: [
       { path: '/:projectId/*', element: <DocViewerPage /> },
       { path: '*', element: <NotFoundPage /> },
@@ -28,7 +22,9 @@ const router = createBrowserRouter([
 root.render(
   <StrictMode>
     <HelmetProvider>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </HelmetProvider>
   </StrictMode>
 )

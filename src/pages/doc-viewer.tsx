@@ -3,21 +3,37 @@ import { allPages, folders, projects } from "@/content/_index";
 import { Helmet } from "react-helmet-async";
 import { Navigate, useParams } from "react-router-dom";
 import { NotFoundPage } from "./404";
+import { Header } from "@/components/widgets/header";
+import { useState } from "react";
 
 function PageNotFound({ projectId, projectMeta }: { projectId: string, projectMeta: any }) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
-    <div className="flex">
-      {projectMeta && <Sidebar projectId={projectId} projectMeta={projectMeta} />}
-      <main className="flex-1 p-8">
-        <h1 className="text-2xl font-bold">404 - Document Not Found</h1>
-        <p className="text-zinc-400 mt-2">The documentation page you are looking for does not exist.</p>
-      </main>
-    </div>
+    <>
+      <Header project={projectMeta} onMenuClick={() => setIsSidebarOpen(true)} />
+      <div className="flex">
+        {projectMeta && (
+          <Sidebar 
+            projectId={projectId} 
+            projectMeta={projectMeta} 
+            isOpen={isSidebarOpen} 
+            onClose={() => setIsSidebarOpen(false)} 
+          />
+        )}
+        <main className="flex-1 p-8">
+          <h1 className="text-2xl font-bold">404 - Document Not Found</h1>
+          <p className="text-zinc-400 mt-2">The documentation page you are looking for does not exist.</p>
+        </main>
+      </div>
+    </>
   );
 }
 
 export function DocViewerPage() {
   const { projectId, '*': docPath } = useParams<{ projectId: string; '*': string; }>();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const projectMeta = projects[projectId || ''];
   
   // if project dont exist, show 404
@@ -46,10 +62,16 @@ export function DocViewerPage() {
     <>
       <Helmet>
         <title>{title}</title>
+
+        {projectMeta.logoUrl && (
+          <link rel="icon" href={projectMeta.logoUrl} />
+        )}
       </Helmet>
 
-      <div className="flex max-w-7xl mx-auto w-full">
-        <Sidebar projectId={projectId!} projectMeta={projectMeta} />
+      <Header project={projectMeta} onMenuClick={() => setIsSidebarOpen(true)} />
+      
+      <div className="flex mx-auto w-full">
+        <Sidebar projectId={projectId!} projectMeta={projectMeta} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
         <main className="flex-1 min-w-0 p-8">
           <article className="prose prose-invert max-w-none">
