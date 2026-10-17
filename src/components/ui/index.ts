@@ -4,3 +4,7 @@ export * from "./button";
 export * from "./tooltip";
 export * from "./code-block";
 export * from "./space";
+export * from "./link";
+export * from "./quote";
+export * from "./columns";
+export * from "./card";

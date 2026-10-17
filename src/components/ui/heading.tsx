@@ -21,7 +21,12 @@ const headingVariants = cva(
   }
 );
 
-export function Heading({ children, size = "h1", className = "" }: { children: ReactNode, className?: string } & VariantProps<typeof headingVariants>) {
+interface HeadingProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function Heading({ children, size = "h1", className = "" }: HeadingProps & VariantProps<typeof headingVariants>) {
   return (
     <h1 className={cn(headingVariants({ size, className }))}>
       {children}

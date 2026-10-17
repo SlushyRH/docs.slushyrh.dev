@@ -1,5 +1,4 @@
-import { Paragraph, Heading, Space, CodeBlock, Button } from "@/components/ui";
-import { Link } from "@/components/ui/link";
+import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card } from "@/components/ui";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
 
@@ -36,12 +35,12 @@ print("Final prices:", get_discounted_prices(items, 0.15))`;
 function Content({ project }: { project: ProjectMeta }) {
   return (
     <>
-      <Heading size='h1' className="pb-0">Heading 1</Heading>
-      <Heading size='h2' className="pb-0">Heading 2</Heading>
-      <Heading size='h3' className="pb-0">Heading 3</Heading>
-      <Heading size='h4' className="pb-0">Heading 4</Heading>
-      <Heading size='h5' className="pb-0">Heading 5</Heading>
-      <Heading size='h6' className="pb-0">Heading 6</Heading>
+      <Heading size='h1' className="pb-0 pt-0">Heading 1</Heading>
+      <Heading size='h2' className="pb-0 pt-0">Heading 2</Heading>
+      <Heading size='h3' className="pb-0 pt-0">Heading 3</Heading>
+      <Heading size='h4' className="pb-0 pt-0">Heading 4</Heading>
+      <Heading size='h5' className="pb-0 pt-0">Heading 5</Heading>
+      <Heading size='h6' className="pb-0 pt-0">Heading 6</Heading>
 
       <Space space={12} />
 
@@ -84,6 +83,36 @@ function Content({ project }: { project: ProjectMeta }) {
           <Button variant="ghost" size='icon'><FaUser /></Button>
         </div>
       </div>
+
+      <Heading>Quote</Heading>
+      <Quote>
+        <Heading size='h3' className="pt-0">Custom Content</Heading>
+        <Paragraph>
+          You can put any content inside a quote.
+        </Paragraph>
+        <Button variant='outline'>Click Me</Button>
+      </Quote>
+
+      <Heading>Columns & Cards</Heading>
+      <Columns>
+        <Card>
+          <Paragraph>
+            This is the left column.
+          </Paragraph>
+        </Card>
+
+        <Card>
+          <Paragraph className="text-center">
+            This is the center column.
+          </Paragraph>
+        </Card>
+
+        <Card>
+          <Paragraph className="text-right">
+            This is the right column.
+          </Paragraph>
+        </Card>
+      </Columns>
     </>
   )
 }
