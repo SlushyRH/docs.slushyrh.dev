@@ -70,7 +70,7 @@ export function DocViewerPage() {
 
       <Header project={projectMeta} onMenuClick={() => setIsSidebarOpen(true)} />
       
-      <div className="flex mx-auto w-full">
+      <div className="flex lg:px-0 xl:px-40 w-full">
         <Sidebar projectId={projectId!} projectMeta={projectMeta} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
         <main className="flex-1 min-w-0 p-8">

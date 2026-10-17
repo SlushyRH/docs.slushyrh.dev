@@ -79,7 +79,7 @@ export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProp
       )}
 
       {/* Sidebar Panel */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-64 transform overflow-y-auto border-r border-zinc-800 bg-[#1e1e1e] p-4 transition-transform duration-300 ease-in-out lg:sticky lg:top-14 lg:z-0 lg:block lg:h-[calc(100vh-3.5rem)] ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+      <aside className={`fixed inset-y-0 left-0 z-50 w-64 transform overflow-y-auto border-r border-border p-4 transition-transform duration-300 ease-in-out lg:sticky lg:top-14 lg:z-0 lg:block lg:h-[calc(100vh-3.5rem)] ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         
         {/* Mobile Header with Close Button */}
         <div className="mb-6 flex items-center justify-between lg:hidden">
@@ -93,7 +93,7 @@ export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProp
         </div>
 
         {/* Desktop Title */}
-        <div className="mb-6 hidden font-bold text-lg lg:block">{projectMeta.title}</div>
+        <div className="mb-6 hidden font-bold text-lg md:block">{projectMeta.title}</div>
         
         <nav className="space-y-2">
           {tree['root']?.length > 0 && (

@@ -1,6 +1,7 @@
 import type { ProjectMeta } from "@/lib/types";
-import { LuMenu, LuSearch } from "react-icons/lu";
+import { LuMenu, LuSearch, LuSun, LuMoon } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
+import { useTheme } from "@/components/providers/theme-provider";
 
 interface HeaderProps {
   project: ProjectMeta;
@@ -8,15 +9,17 @@ interface HeaderProps {
 }
 
 export function Header({ project, onMenuClick }: HeaderProps) {
+  const { theme, setTheme } = useTheme();
+
   return (
-    <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between border-b border-white/10 bg-[#1e1e1e]/80 px-4 text-white backdrop-blur-md">
+    <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between border-b border-border px-4 backdrop-blur-md">
       
-      <div className="flex items-center gap-3">
+      <div className="flex lg:px-0 xl:px-40 items-center gap-3">
         {/* mobile hamburger button */}
         <button 
           type="button"
           onClick={onMenuClick}
-          className="rounded-md p-2 -ml-2 text-neutral-400 hover:bg-white/10 hover:text-white md:hidden"
+          className="rounded-md p-2 -ml-2 text-neutral-400 hover:bg-white/10 hover:text-white lg:hidden"
           aria-label="Toggle Menu"
         >
           <LuMenu size={20} />
@@ -37,7 +40,23 @@ export function Header({ project, onMenuClick }: HeaderProps) {
         </NavLink>
       </div>
 
-      <div className="flex items-center justify-end">
+      <div className="flex lg:px-0 xl:px-40 items-center justify-end gap-2">
+        {/* Theme Switcher Dropdown */}
+        <div className="relative flex items-center">
+          <select
+            value={theme}
+            onChange={(e) => setTheme(e.target.value as 'dark' | 'light')}
+            className="h-9 appearance-none rounded-md border border-white/10 bg-[#141414] pl-3 pr-8 text-xs font-medium text-neutral-300 transition-colors hover:border-white/20 hover:bg-[#1a1a1a] focus:outline-none focus:ring-1 focus:ring-white/20 cursor-pointer"
+            aria-label="Select theme"
+          >
+            <option value="light" className="bg-[#141414] text-neutral-300">Light</option>
+            <option value="dark" className="bg-[#141414] text-neutral-300">Dark</option>
+          </select>
+          <div className="pointer-events-none absolute right-2.5 text-neutral-400">
+            {theme === 'dark' ? <LuMoon size={14} /> : <LuSun size={14} />}
+          </div>
+        </div>
+
         {/* mobile search icon */}
         <button 
           type="button"
