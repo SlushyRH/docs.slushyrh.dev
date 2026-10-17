@@ -2,6 +2,7 @@ import type { ProjectMeta } from '@/lib/types';
 import { allPages, folders } from '@/content/_index'; 
 import SidebarItem from './sidebar-item';
 import { LuX } from 'react-icons/lu';
+import { Button } from '../ui';
 
 interface SidebarProps {
   projectId: string;
@@ -72,28 +73,37 @@ export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProp
     <>
       {/* Mobile Overlay */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
-          onClick={onClose}
-        />
+        <>
+          <div 
+            className="fixed inset-0 z-40 backdrop-blur-sm bg-black/40 lg:hidden"
+            onClick={onClose}
+          />
+          <Button 
+            variant="outline" 
+            size="icon" 
+            onClick={onClose} 
+            className="fixed top-4 right-4 z-50 lg:hidden" 
+            aria-label="Close sidebar"
+          >
+            <LuX size={20} />
+          </Button>
+        </>
       )}
 
       {/* Sidebar Panel */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-64 transform overflow-y-auto border-r border-border p-4 transition-transform duration-300 ease-in-out lg:sticky lg:top-14 lg:z-0 lg:block lg:h-[calc(100vh-3.5rem)] ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+      <aside className={`fixed inset-y-0 bg-bg left-0 z-50 w-[75%] lg:w-64 transform overflow-y-auto border-r border-border p-4 transition-transform duration-300 ease-in-out lg:sticky lg:top-14 lg:z-0 lg:block lg:h-[calc(100vh-3.5rem)] ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         
         {/* Mobile Header with Close Button */}
-        <div className="mb-6 flex items-center justify-between lg:hidden">
+        <div className="mb-6 flex items-center gap-2 lg:hidden">
+          {projectMeta.logoUrl && (
+            <img 
+              src={projectMeta.logoUrl} 
+              alt={`${projectMeta.title} logo`} 
+              className="h-6 w-6 object-contain" 
+            />
+          )}
           <span className="font-bold text-lg">{projectMeta.title}</span>
-          <button 
-            onClick={onClose}
-            className="rounded-md p-2 text-neutral-400 hover:bg-white/10 hover:text-white"
-          >
-            <LuX size={20} />
-          </button>
         </div>
-
-        {/* Desktop Title */}
-        <div className="mb-6 hidden font-bold text-lg md:block">{projectMeta.title}</div>
         
         <nav className="space-y-2">
           {tree['root']?.length > 0 && (
@@ -112,7 +122,7 @@ export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProp
 
             return (
               <div key={section.id} className="mt-8">
-                <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+                <h4 className="font-semibold uppercase tracking-wider mb-2 ml-2.5">
                   {section.label}
                 </h4>
                 <ul className="space-y-1">
