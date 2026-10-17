@@ -8,3 +8,4 @@ export * from "./link";
 export * from "./quote";
 export * from "./columns";
 export * from "./card";
+export * from "./scroll-area";

@@ -1,4 +1,4 @@
-import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card } from "@/components/ui";
+import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card, ScrollArea } from "@/components/ui";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
 
@@ -113,6 +113,17 @@ function Content({ project }: { project: ProjectMeta }) {
           </Paragraph>
         </Card>
       </Columns>
+
+      <Heading>Scroll Area</Heading>
+      <Card className="">
+        <ScrollArea className='h-24'>
+          <Paragraph>Paragraph 1 is the first paragraph.</Paragraph>
+          <Paragraph>Paragraph 2 is the NOT first paragraph.</Paragraph>
+          <Paragraph>Paragraph 3 is the NOT first paragraph.</Paragraph>
+          <Paragraph>Paragraph 4 is the NOT first paragraph.</Paragraph>
+          <Paragraph>Paragraph 5 is the NOT first paragraph.</Paragraph>
+        </ScrollArea>
+      </Card>
     </>
   )
 }
