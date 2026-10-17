@@ -1,5 +1,6 @@
 import { Paragraph, Heading, Space, CodeBlock, Button } from "@/components/ui";
-import type { DocPageMeta } from "@/lib/types";
+import { Link } from "@/components/ui/link";
+import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
 
 const typescriptCodeExample = 
@@ -32,7 +33,7 @@ const pythonCodeExample =
 items = [5.5, 15.0, 45.99]
 print("Final prices:", get_discounted_prices(items, 0.15))`;
 
-function Content() {
+function Content({ project }: { project: ProjectMeta }) {
   return (
     <>
       <Heading size='h1' className="pb-0">Heading 1</Heading>
@@ -46,21 +47,9 @@ function Content() {
 
       <Heading>Paragraphs</Heading>
       <Paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris cursus dui ut urna finibus, et porttitor dolor ultrices.
-        Sed eu lectus non elit placerat egestas vel eget elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti.
-        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-        Ut et justo ullamcorper, mattis nunc id, commodo nulla. Nulla facilisi. Morbi sagittis, enim quis vehicula dignissim,
-        eros est rutrum libero, eget fringilla velit nunc ultricies neque. Praesent id tempor dolor, at aliquet risus. Etiam orci lacus,
-        eleifend eu sapien nec, ullamcorper efficitur est. Nulla vel porta arcu. Cras vel risus feugiat, aliquet quam sit amet, vulputate augue.
-        Mauris bibendum cursus felis sit amet rutrum. Nullam pretium accumsan luctus. Pellentesque pharetra viverra nunc non pharetra.
-      </Paragraph>
-
-      <Paragraph>
-        Ut consectetur ligula sed nisi egestas tincidunt. Integer et ligula at enim eleifend dignissim.
-        Nullam imperdiet cursus blandit. Suspendisse potenti. Donec congue tempus turpis eu auctor.
-        Donec pellentesque vitae massa eget condimentum. Integer dapibus massa mi, vitae sodales erat interdum quis.
-        Nunc arcu leo, blandit ac aliquet vitae, fermentum ac justo. Integer placerat convallis sapien. Phasellus non magna augue. 
+        This is a paragraph, it's pretty basic. You can write <b>bold</b>, <i>italics</i>, and anything else since it's normal HTML.
+        You can also include links, either to other pages <Link href={`/${project.slug}/intro`}>another page</Link>, or
+        an <Link href="https://slushyrh.dev" sameTab={false}>external page</Link>.
       </Paragraph>
 
       <Heading>Code Block</Heading>

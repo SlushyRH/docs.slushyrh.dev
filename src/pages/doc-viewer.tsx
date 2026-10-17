@@ -75,7 +75,7 @@ export function DocViewerPage() {
 
         <main className="flex-1 min-w-0 p-8">
           <article className="prose prose-invert max-w-none">
-            <PageContent />
+            <PageContent project={projectMeta} />
           </article>
         </main>
       </div>

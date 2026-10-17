@@ -33,7 +33,7 @@ export interface DocFolderMeta {
 export interface DocPageMeta {
   slug: string;
   label: string;
-  Content: React.FC;
+  Content: React.FC<{project: ProjectMeta}>
   order?: number;
   section?: string;
 }

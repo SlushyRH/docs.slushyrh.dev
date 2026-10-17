@@ -1,6 +1,7 @@
 import { Paragraph, Heading } from "@/components/ui";
 import type { DocPageMeta } from "@/lib/types";
 
+// function Content({ project }: { project: ProjectMeta }) {
 function Content() {
   return (
     <>
