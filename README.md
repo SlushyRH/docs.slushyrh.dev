@@ -1,0 +1,21 @@
+# todo
+- add support for code block (port from lrh04.dev repo)
+- add multiple sizes for titles and paragraphs
+- add a 'On This Page' sidebar on the right
+- add previous and next page buttons at the bottom
+- add a link text item
+- add working search bar (clicking it should bring a block up that shows results as they type)
+- add checkbox component (user can't click it)
+- add lists (numbered and unordered)
+- add hint component
+- add quote component
+- add image and video components
+- add embed component
+- add table component
+- add tabs (should hold whatever children they want in each)
+- add expandable component
+- add scroll area component
+- add stepper component
+- add card component
+- add column component
+- add api reference component?
