@@ -3,14 +3,14 @@ import type { IconType } from "react-icons";
 export interface Link {
   title: string;
   url: string;
-  icon: IconType | null;
+  icon?: IconType | null;
 }
 
 export interface ProjectMeta {
   slug: string;
   title: string;
   description: string;
-  links: Link[];
+  links?: Link[] | null;
 }
 
 export interface DocPageMeta {
