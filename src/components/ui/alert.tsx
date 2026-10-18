@@ -4,14 +4,14 @@ import type { ReactNode } from "react";
 import { LuInfo, LuLightbulb, LuTriangleAlert, LuCircleX } from "react-icons/lu";
 
 const alertVariants = cva(
-  "w-full rounded-lg border border-l-4 p-4 mb-4 flex flex-col gap-2",
+  "w-full rounded-lg border-2 p-4 mb-4 flex flex-col gap-2",
   {
     variants: {
       type: {
-        info: "border-blue-500/30 border-l-blue-500 bg-blue-500/10",
-        warning: "border-yellow-500/30 border-l-yellow-500 bg-yellow-500/10",
-        tip: "border-green-500/30 border-l-green-500 bg-green-500/10",
-        caution: "border-red-500/30 border-l-red-500 bg-red-500/10",
+        info: "border-blue-500/30 bg-blue-500/10",
+        warning: "border-yellow-500/30 bg-yellow-500/10",
+        tip: "border-green-500/30 bg-green-500/10",
+        caution: "border-red-500/30 bg-red-500/10",
       }
     },
     defaultVariants: {

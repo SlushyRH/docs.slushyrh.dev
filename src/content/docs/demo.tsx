@@ -186,7 +186,7 @@ function Content({ project }: { project: ProjectMeta }) {
         <Alert type="caution">
           caution details here.
         </Alert>
-        <Alert type="info" title="Custom Title">
+        <Alert type="caution" title="Custom Title">
           caution details here.
         </Alert>
       </Columns>
