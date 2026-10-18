@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { FaCheck, FaCopy } from "react-icons/fa";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 type CodeBlockProps = {
   allowCopy?: boolean;
+  hideNumbers?: boolean;
   highlightLines?: number[];
   className?: string;
-} & (
+} & Omit<SyntaxHighlighterProps, "language" | "children"> & (
   | {
       code: string;
       language: string;
@@ -26,7 +27,17 @@ type CodeBlockProps = {
     }
 )
 
-export function CodeBlock({ code, language, className = "", filename = "", allowCopy = true, highlightLines = [], tabs = [] }: CodeBlockProps) {
+export function CodeBlock({ 
+  code, 
+  language, 
+  className = "", 
+  filename = "", 
+  allowCopy = true, 
+  hideNumbers = false, 
+  highlightLines = [], 
+  tabs = [], 
+  ...props 
+}: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
@@ -99,13 +110,14 @@ export function CodeBlock({ code, language, className = "", filename = "", allow
               minWidth: 0,
             }}
             wrapLines={true}
-            showLineNumbers={true}
+            showLineNumbers={!hideNumbers}
             lineProps={(lineNumber: number) => ({
               className: activeHighlights.includes(lineNumber)
-                ? "block w-full bg-secondary/50 border-l-2 border-accent"
-                : "block w-full border-l-2 border-transparent",
+                ? "block w-full bg-secondary/50 border-accent"
+                : "block w-full border-transparent hover:bg-secondary/30 hover:border-accent/50 transition-colors",
             })}
             PreTag="div"
+            {...props}
           >
             {String(activeCode)}
           </SyntaxHighlighter>
