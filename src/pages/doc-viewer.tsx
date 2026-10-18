@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { Sidebar } from "@/components/widgets/sidebar";
 import { allPages, folders, projects } from "@/content/_index";
 import { Helmet } from "react-helmet-async";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, Link } from "react-router-dom";
 import { NotFoundPage } from "./404";
 import { Header } from "@/components/widgets/header";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
+import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 
 export function OnThisPage({ docPath }: { docPath: string }) {
   const [headings, setHeadings] = useState<{ id: string; text: string; level: number }[]>([]);
@@ -182,6 +183,70 @@ export function DocViewerPage() {
   const title = `${targetPage.data.label} | ${projectMeta.title}`;
   const PageContent = targetPage.data.Content;
 
+  const projectPages = Object.entries(allPages)
+    .filter(([_, pageData]) => pageData.projectId === projectId)
+    .map(([path, pageData]) => ({ path, ...pageData.data }));
+
+  const tree: Record<string, any[]> = {};
+  const sections = projectMeta.sections || []; 
+  sections.forEach((section: any) => { tree[section.id] = []; }); 
+  tree['root'] = [];
+
+  projectPages.forEach(page => {
+    const pathParts = page.path.split('/');
+    const isRootPage = pathParts.length === 1;
+
+    if (isRootPage) {
+      const sectionId = tree[page.section || ''] ? page.section! : 'root';
+      tree[sectionId].push({ type: 'page', ...page });
+    } else {
+      const folderPath = pathParts.slice(0, -1).join('/');
+      const folderMeta = folders[folderPath]; 
+      
+      const requestedSection = folderMeta?.section || page.section || 'root';
+      const sectionId = tree[requestedSection] ? requestedSection : 'root';
+      
+      let folderNode = tree[sectionId].find((n: any) => n.type === 'folder' && n.path === folderPath);
+      if (!folderNode) {
+        folderNode = { type: 'folder', path: folderPath, meta: folderMeta, pages: [] };
+        tree[sectionId].push(folderNode);
+      }
+      folderNode.pages.push({ type: 'page', ...page });
+    }
+  });
+
+  Object.keys(tree).forEach(key => { 
+    tree[key].sort((a, b) => { 
+      const orderA = a.type === 'folder' ? (a.meta?.order ?? 99) : (a.order ?? 99); 
+      const orderB = b.type === 'folder' ? (b.meta?.order ?? 99) : (b.order ?? 99); 
+      return orderA - orderB; 
+    });
+    tree[key].forEach(node => {
+      if (node.type === 'folder') {
+        node.pages.sort((a: any, b: any) => (a.order ?? 99) - (b.order ?? 99));
+      }
+    });
+  });
+
+  const flatPages: any[] = [];
+  const renderOrder = ['root', ...sections.map((s: any) => s.id)];
+  
+  renderOrder.forEach(sectionId => {
+    const items = tree[sectionId];
+    if (!items) return;
+    items.forEach(node => {
+      if (node.type === 'page') {
+        flatPages.push(node);
+      } else if (node.type === 'folder') {
+        node.pages.forEach((page: any) => flatPages.push(page));
+      }
+    });
+  });
+
+  const currentIndex = flatPages.findIndex(p => p.path === docPath);
+  const prevPage = currentIndex > 0 ? flatPages[currentIndex - 1] : null;
+  const nextPage = currentIndex !== -1 && currentIndex < flatPages.length - 1 ? flatPages[currentIndex + 1] : null;
+
   return (
     <>
       <Helmet>
@@ -196,10 +261,34 @@ export function DocViewerPage() {
       <div className="flex lg:px-0 w-full max-w-[1600px] mx-auto">
         <Sidebar projectId={projectId!} projectMeta={projectMeta} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-        <main className="flex-1 min-w-0 p-8 lg:p-12">
-          <article className="prose prose-invert max-w-none">
+        <main className="flex-1 min-w-0 p-8 lg:p-12 flex flex-col">
+          <article className="prose prose-invert max-w-none flex-1">
             <PageContent project={projectMeta} />
           </article>
+
+          <div className="flex items-center justify-between pt-6 border-t border-border">
+            {prevPage ? (
+              <Link to={`/${projectId}/${prevPage.path}`}>
+                <Button variant="outline" size='lg'>
+                  <LuArrowLeft />
+                  {prevPage.label}
+                </Button>
+              </Link>
+            ) : (
+              <div />
+            )}
+
+            {nextPage ? (
+              <Link to={`/${projectId}/${nextPage.path}`}>
+                <Button variant="outline" size='lg'>
+                  {nextPage.label}
+                  <LuArrowRight />
+                </Button>
+              </Link>
+            ) : (
+              <div />
+            )}
+          </div>
         </main>
 
         <OnThisPage docPath={docPath} />
