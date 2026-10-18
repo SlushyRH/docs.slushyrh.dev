@@ -4,5 +4,4 @@
 - add embed component
 - add table component
 - add expandable component
-- add terminal object for commands?
 - add api reference component?

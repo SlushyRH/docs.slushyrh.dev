@@ -1,5 +1,10 @@
 import type { IconType } from "react-icons";
 
+export interface ComponentProps {
+  noMargin?: boolean;
+  className?: string;
+}
+
 export interface Link {
   title: string;
   url: string;

@@ -1,12 +1,12 @@
 import { type ReactNode } from 'react';
 
-interface ColumnsProps {
+interface GridProps {
   children: ReactNode;
   minWidth?: string;
   className?: string;
 }
 
-export function Columns({ children, minWidth = '250px', className = '' }: ColumnsProps) {
+export function Grid({ children, minWidth = '250px', className = '' }: GridProps) {
   return (
     <div 
       className={`grid gap-4 ${className}`}

@@ -1,4 +1,4 @@
-import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator, Code } from "@/components/ui";
+import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Grid, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator, Code, Flex, Checkbox } from "@/components/ui";
 import { List, ListItem } from "@/components/ui/list";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
@@ -64,34 +64,36 @@ function Content({ project }: { project: ProjectMeta }) {
       />
 
       <Heading>Buttons</Heading>
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
+      <Flex orientation="vertical">
+        <Flex center>
           <p>Text:</p>
           <Button variant='default'>Default</Button>
           <Button variant="secondary">Secondary</Button>
           <Button variant="outline">Outline</Button>
           <Button variant="ghost">Ghost</Button>
-        </div>
-        <div className="flex items-center gap-2">
+        </Flex>
+        <Flex center>
           <p>Text + Icon: </p>
           <Button variant='default'><FaUser /> Default</Button>
           <Button variant="secondary"><FaUser /> Secondary</Button>
           <Button variant="outline"><FaUser /> Outline</Button>
           <Button variant="ghost"><FaUser /> Ghost</Button>
-        </div>
-        <div className="flex items-center gap-2">
+        </Flex>
+        <Flex center>
           <p>Icon: </p>
           <Button variant='default' size='icon'><FaUser /></Button>
           <Button variant="secondary" size='icon'><FaUser /></Button>
           <Button variant="outline" size='icon'><FaUser /></Button>
           <Button variant="ghost" size='icon'><FaUser /></Button>
-        </div>
-        <div className="flex items-center gap-2">
+        </Flex>
+        <Flex center>
           <p>Tooltip: </p>
           <Button variant='default' size='icon' tooltip='This has a tooltip'><FaUser /></Button>
           <Button variant='default' tooltip='This has a tooltip' tooltipSide='bottom'>Default</Button>
-        </div>
-      </div>
+        </Flex>
+      </Flex>
+      
+      <Checkbox checked label="You can add a label." />
 
       <Heading>Quote</Heading>
       <Quote>
@@ -103,7 +105,7 @@ function Content({ project }: { project: ProjectMeta }) {
       </Quote>
 
       <Heading>Columns & Cards</Heading>
-      <Columns>
+      <Grid>
         <Card>
           <Paragraph>
             This is the left column.
@@ -121,7 +123,7 @@ function Content({ project }: { project: ProjectMeta }) {
             This is the right column.
           </Paragraph>
         </Card>
-      </Columns>
+      </Grid>
 
       <Heading>Scroll Area</Heading>
       <Card className="">
@@ -158,42 +160,44 @@ function Content({ project }: { project: ProjectMeta }) {
       <Image caption="The one and only lord Kim Jon Un (looking pretty cute)" src="https://media.discordapp.net/attachments/743447045196480512/1554470946042159184/image.png?ex=6ad56522&is=6ad413a2&hm=801624357b9928300e0d9c68559b5bdbe30fb3e98c04907311e27937ec54a722&=&format=webp&quality=lossless" />
 
       <Heading>Spaces & Separators</Heading>
+      Above Space
       <Space />
+      Below Space
       <Separator />
 
       <Heading>Alerts</Heading>
-      <Columns>
+      <Grid>
         <Alert type="info">
           Info details here.
         </Alert>
         <Alert type="info" title="Custom Title">
           Info details here.
         </Alert>
-      </Columns>
-      <Columns>
+      </Grid>
+      <Grid>
         <Alert type="tip">
           tip details here.
         </Alert>
         <Alert type="tip" title="Custom Title">
           tip details here.
         </Alert>
-      </Columns>
-      <Columns>
+      </Grid>
+      <Grid>
         <Alert type="warning">
           warning details here.
         </Alert>
         <Alert type="warning" title="Custom Title">
           warning details here.
         </Alert>
-      </Columns>
-      <Columns>
+      </Grid>
+      <Grid>
         <Alert type="caution">
           caution details here.
         </Alert>
         <Alert type="caution" title="Custom Title">
           caution details here.
         </Alert>
-      </Columns>
+      </Grid>
 
       <Heading>Lists</Heading>
       <List type="ordered">

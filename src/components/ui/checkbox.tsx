@@ -1,0 +1,32 @@
+import { cn } from "@/lib/utils";
+import { LuCheck } from "react-icons/lu";
+import type { ReactNode } from "react";
+
+interface CheckboxProps {
+  checked?: boolean;
+  label?: ReactNode;
+  className?: string;
+}
+
+export function Checkbox({ checked = false, label, className }: CheckboxProps) {
+  return (
+    <div className={cn("flex items-center gap-2", className)}>
+      <div
+        className={cn(
+          "flex size-5 shrink-0 items-center justify-center rounded-sm border transition-colors",
+          checked
+            ? "bg-primary border-border text-primary-text" 
+            : "border-border bg-transparent"
+        )}
+      >
+        {checked && <LuCheck size={14} strokeWidth={4} />}
+      </div>
+      
+      {label && (
+        <span className="text-text">
+          {label}
+        </span>
+      )}
+    </div>
+  );
+}
