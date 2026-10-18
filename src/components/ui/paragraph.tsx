@@ -1,7 +1,33 @@
+import { cn } from "@/lib/utils";
+import { cva, type VariantProps } from "class-variance-authority";
 import type { ReactNode } from "react";
 
-export function Paragraph({ children, className = "" }: { children: ReactNode, className?: string }) {
+const paragraphVariants = cva(
+  "pb-2",
+  {
+    variants: {
+      size: {
+        sm: "text-sm",
+        base: "text-base",
+        lg: "text-lg",
+        xl: "text-xl",
+      }
+    },
+    defaultVariants: {
+      size: "base",
+    }
+  }
+);
+
+interface ParagraphProps extends VariantProps<typeof paragraphVariants> {
+  children: ReactNode;
+  className?: string;
+}
+
+export function Paragraph({ children, size, className = "" }: ParagraphProps) {
   return (
-    <p className={`pb-2 ${className }`}>{children}</p>
+    <p className={cn(paragraphVariants({ size, className }))}>
+      {children}
+    </p>
   );
 }
