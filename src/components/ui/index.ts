@@ -4,6 +4,7 @@ export * from "./button";
 export * from "./tooltip";
 export * from "./code-block";
 export * from "./space";
+export * from "./separator";
 export * from "./link";
 export * from "./quote";
 export * from "./columns";

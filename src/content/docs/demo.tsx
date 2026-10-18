@@ -1,4 +1,4 @@
-import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert } from "@/components/ui";
+import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator } from "@/components/ui";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
 
@@ -153,6 +153,10 @@ function Content({ project }: { project: ProjectMeta }) {
       <Video autoPlay loop src="https://images-ext-1.discordapp.net/external/ehQLPqtuj2P5BU8IP8hqlwcopyRvzvLJI42pYuvL6p4/https/media.tenor.com/1hb35pgZbqIAAAPo/nailong-dwerk.mp4" />
       <Image caption="The one and only lord Kim Jon Un (looking pretty cute)" src="https://media.discordapp.net/attachments/743447045196480512/1554470946042159184/image.png?ex=6ad56522&is=6ad413a2&hm=801624357b9928300e0d9c68559b5bdbe30fb3e98c04907311e27937ec54a722&=&format=webp&quality=lossless" />
     
+      <Heading>Spaces & Separators</Heading>
+      <Space />
+      <Separator />
+
       <Heading>Alerts</Heading>
       <Columns>
         <Alert type="info">
