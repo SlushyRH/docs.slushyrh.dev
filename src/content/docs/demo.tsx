@@ -56,10 +56,10 @@ function Content({ project }: { project: ProjectMeta }) {
       <Paragraph>
         You can do <Code>Inline Code</Code> text as well as full code blocks below.
       </Paragraph>
+      <CodeBlock language="csharp" code={pythonCodeExample} showHeader hideNumbers />
       <CodeBlock tabs={[
           { name: 'Typescript', code: typescriptCodeExample, language: "typescript" },
-          { name: 'C#', code: csharpCodeExample, language: "csharp" },
-          { name: 'Python', code: pythonCodeExample, language: "python", highlightLines: [3] },
+          { name: 'C#', code: csharpCodeExample, language: "csharp", highlightLines: [8] },
         ]}
       />
 
