@@ -6,7 +6,7 @@ interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 
 export function Image({ src, alt, caption, className, ...props }: ImageProps) {
   return (
-    <figure className={cn("w-full", className)}>
+    <figure className={cn("mb-4 w-full", className)}>
       <div className="overflow-hidden rounded-lg border border-border bg-zinc-900/50 shadow-sm">
         <img 
           src={src} 

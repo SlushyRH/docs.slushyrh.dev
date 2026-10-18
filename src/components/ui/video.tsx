@@ -7,7 +7,7 @@ interface VideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
 
 export function Video({ src, caption, className, controls = true, ...props }: VideoProps) {
   return (
-    <figure className={cn("my-8 w-full", className)}>
+    <figure className={cn("mb-4 w-full", className)}>
       <div className="relative overflow-hidden rounded-lg border border-border bg-black aspect-video shadow-sm">
 
         <ReactPlayer 

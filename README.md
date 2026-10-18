@@ -6,5 +6,5 @@
 - add embed component
 - add table component
 - add expandable component
-- add stepper component
+- add terminal object for commands?
 - add api reference component?
