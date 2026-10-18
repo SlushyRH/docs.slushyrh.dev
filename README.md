@@ -5,7 +5,6 @@
 - add checkbox component (user can't click it)
 - add lists (numbered and unordered)
 - add hint component
-- add image and video components
 - add embed component
 - add table component
 - add expandable component

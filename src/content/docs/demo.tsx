@@ -150,7 +150,7 @@ function Content({ project }: { project: ProjectMeta }) {
       </Stepper>
 
       <Heading>Images & Videos</Heading>
-      <Image caption="king" src="https://media.discordapp.net/attachments/743447045196480512/1554470946042159184/image.png?ex=6ad56522&is=6ad413a2&hm=801624357b9928300e0d9c68559b5bdbe30fb3e98c04907311e27937ec54a722&=&format=webp&quality=lossless" />
+      <Image caption="The one and only lord Kim Jon Un (looking pretty cute)" src="https://media.discordapp.net/attachments/743447045196480512/1554470946042159184/image.png?ex=6ad56522&is=6ad413a2&hm=801624357b9928300e0d9c68559b5bdbe30fb3e98c04907311e27937ec54a722&=&format=webp&quality=lossless" />
       <Video autoPlay loop src="https://images-ext-1.discordapp.net/external/ehQLPqtuj2P5BU8IP8hqlwcopyRvzvLJI42pYuvL6p4/https/media.tenor.com/1hb35pgZbqIAAAPo/nailong-dwerk.mp4" />
     </>
   )
