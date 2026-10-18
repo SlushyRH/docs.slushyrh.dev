@@ -16,3 +16,4 @@ export * from "./stepper";
 export * from "./image";
 export * from "./video";
 export * from "./alert";
+export * from "./link";

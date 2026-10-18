@@ -1,4 +1,5 @@
 import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator, Code } from "@/components/ui";
+import { List, ListItem } from "@/components/ui/list";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
 
@@ -193,6 +194,21 @@ function Content({ project }: { project: ProjectMeta }) {
           caution details here.
         </Alert>
       </Columns>
+
+      <Heading>Lists</Heading>
+      <List type="ordered">
+        <ListItem>First Item</ListItem>
+        <ListItem>Second Item</ListItem>
+        <List type="ordered">
+          <ListItem>Second A Item</ListItem>
+          <List type="unordered">
+            <ListItem>Second I Item</ListItem>
+            <ListItem>Second II Item</ListItem>
+          </List>
+          <ListItem>Second B Item</ListItem>
+        </List>
+        <ListItem>Third Item</ListItem>
+      </List>
     </>
   )
 }
