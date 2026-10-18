@@ -1,4 +1,5 @@
 import React, { useState, type ReactElement, type ReactNode } from 'react';
+import { Card } from './card';
 
 interface TabItemProps {
   title: string;
@@ -22,16 +23,16 @@ export function Tabs({ children, className = '' }: TabsProps) {
   ) as ReactElement<TabItemProps>[];
 
   return (
-    <div className={`w-full ${className}`}>
-      <div className="flex border-b border-border">
+    <div className={`w-full bg-input border-2 border-border rounded-lg ${className}`}>
+      <div className="flex space-x-1 bg-bg rounded-t-lg">
         {tabElements.map((child, index) => (
           <button
             key={index}
             onClick={() => setActiveTabIndex(index)}
-            className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 -mb-px ${
+            className={`px-4 py-2.5 text-sm font-medium transition-colors ${
               activeTabIndex === index
-                ? 'border-blue-500 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                ? 'bg-input text-white'
+                : 'text-zinc-400 bg-transparent hover:text-zinc-200 hover:bg-zinc-800/30'
             }`}
           >
             {child.props.title}
@@ -39,9 +40,9 @@ export function Tabs({ children, className = '' }: TabsProps) {
         ))}
       </div>
 
-      <div className="pt-4">
+      <Card className="rounded-tl-none border-t-0">
         {tabElements[activeTabIndex]}
-      </div>
+      </Card>
     </div>
   );
 }

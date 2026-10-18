@@ -1,4 +1,4 @@
-import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card, ScrollArea, Tabs, TabItem } from "@/components/ui";
+import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card, ScrollArea, Tabs, TabItem, Stepper, Step } from "@/components/ui";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
 
@@ -137,6 +137,12 @@ function Content({ project }: { project: ProjectMeta }) {
           This is tab item 3
         </TabItem>
       </Tabs>
+
+      <Stepper>
+        <Step>Step 1.1<br/>Step 1.2<br/>Step 1.3<br/></Step>
+        <Step>Step 2</Step>
+        <Step>Step 3</Step>
+      </Stepper>
     </>
   )
 }
