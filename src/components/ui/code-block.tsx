@@ -9,21 +9,21 @@ type CodeBlockProps = {
   className?: string;
 } & (
   | {
-    code: string;
-    language: string;
-    filename?: string;
-    tabs?: never;
-  } | {
-    code?: never;
-    language?: never;
-    filename?: never;
-    tabs: Array<{
-      name: string;
       code: string;
       language: string;
-      highlightLines?: number[];
-    }>;
-  }
+      filename?: string;
+      tabs?: never;
+    } | {
+      code?: never;
+      language?: never;
+      filename?: never;
+      tabs: Array<{
+        name: string;
+        code: string;
+        language: string;
+        highlightLines?: number[];
+      }>;
+    }
 )
 
 export function CodeBlock({ code, language, className = "", filename = "", allowCopy = true, highlightLines = [], tabs = [] }: CodeBlockProps) {
@@ -50,19 +50,19 @@ export function CodeBlock({ code, language, className = "", filename = "", allow
 
   return (
     <div
-      className={`relative rounded-lg bg-secondary font-mono text-sm ${className}`}
+      className={`relative rounded-lg bg-bg border border-border font-mono text-sm ${className}`}
       style={{ display: "flex", flexDirection: "column" }}
     >
       {tabsExist && (
-        <div className="rounded-t-lg border-b border-zinc-700 bg-secondary flex overflow-x-auto max-w-full">
+        <div className="rounded-t-lg border-b border-border bg-input/20 flex overflow-x-auto max-w-full">
           {tabs.map((tab, index) => (
             <button
               key={index}
               onClick={() => setActiveTab(index)}
-              className={`rounded-t-md px-3 py-2 text-xs transition-colors font-sans whitespace-nowrap ${
+              className={`px-4 py-2.5 text-xs transition-colors font-sans whitespace-nowrap ${
                 activeTab === index
-                  ? "bg-zinc-800 text-white"
-                  : "bg-zinc-900 text-zinc-400 hover:text-zinc-200"
+                  ? "bg-secondary text-secondary-text"
+                  : "bg-transparent text-text/60 hover:text-text hover:bg-secondary/30"
               }`}
             >
               {tab.name}
@@ -72,13 +72,15 @@ export function CodeBlock({ code, language, className = "", filename = "", allow
       )}
 
       {!tabsExist && filename && (
-        <div className="text-xs text-zinc-400 px-4 py-2">{filename}</div>
+        <div className="text-xs text-text/60 px-4 py-2 border-b border-border bg-input/20">
+          {filename}
+        </div>
       )}
 
       {allowCopy && (
         <button
           onClick={copyToClipboard}
-          className="absolute top-2 right-2 z-10 flex items-center gap-1 cursor-pointer rounded-md bg-primary/80 px-2 py-1 text-xs text-zinc-300 hover:bg-accent hover:text-white transition-colors font-sans"
+          className="absolute top-2 right-2 z-10 flex items-center gap-1 cursor-pointer rounded-md bg-primary px-2 py-1 text-xs text-primary-text hover:bg-accent transition-colors font-sans shadow-sm"
         >
           {copied ? <FaCheck size={14} /> : <FaCopy size={14} />}
         </button>
@@ -99,13 +101,9 @@ export function CodeBlock({ code, language, className = "", filename = "", allow
             wrapLines={true}
             showLineNumbers={true}
             lineProps={(lineNumber: number) => ({
-              style: {
-                backgroundColor: activeHighlights.includes(lineNumber)
-                  ? "rgba(255,255,255,0.1)"
-                  : "transparent",
-                display: "block",
-                width: "100%",
-              },
+              className: activeHighlights.includes(lineNumber)
+                ? "block w-full bg-secondary/50 border-l-2 border-accent"
+                : "block w-full border-l-2 border-transparent",
             })}
             PreTag="div"
           >

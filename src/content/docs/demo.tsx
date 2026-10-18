@@ -1,4 +1,4 @@
-import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator } from "@/components/ui";
+import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Columns, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator, Code } from "@/components/ui";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
 
@@ -52,6 +52,9 @@ function Content({ project }: { project: ProjectMeta }) {
       </Paragraph>
 
       <Heading>Code Block</Heading>
+      <Paragraph>
+        You can do <Code>Inline Code</Code> text as well as full code blocks below.
+      </Paragraph>
       <CodeBlock tabs={[
           { name: 'Typescript', code: typescriptCodeExample, language: "typescript" },
           { name: 'C#', code: csharpCodeExample, language: "csharp" },
