@@ -1,16 +1,16 @@
-import { cn } from "@/lib/utils";
+import { cn, componentStyles } from "@/lib/utils";
 import { LuCheck } from "react-icons/lu";
 import type { ReactNode } from "react";
+import type { ComponentProps } from "@/lib/types";
 
-interface CheckboxProps {
+interface CheckboxProps extends ComponentProps {
   checked?: boolean;
   label?: ReactNode;
-  className?: string;
 }
 
-export function Checkbox({ checked = false, label, className }: CheckboxProps) {
+export function Checkbox({ checked = false, label, noMargin, className }: CheckboxProps) {
   return (
-    <div className={cn("flex items-center gap-2", className)}>
+    <div className={cn("flex items-center gap-2", componentStyles({ noMargin, className }))}>
       <div
         className={cn(
           "flex size-5 shrink-0 items-center justify-center rounded-sm border transition-colors",

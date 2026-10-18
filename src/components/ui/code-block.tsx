@@ -1,3 +1,5 @@
+import type { ComponentProps } from "@/lib/types";
+import { cn, componentStyles } from "@/lib/utils";
 import { useState } from "react";
 import { Prism as SyntaxHighlighter, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
@@ -6,7 +8,6 @@ type CodeBlockProps = {
   allowCopy?: boolean;
   hideNumbers?: boolean;
   highlightLines?: number[];
-  className?: string;
   showHeader?: boolean;
 } & Omit<SyntaxHighlighterProps, "language" | "children"> & (
   | {
@@ -31,6 +32,7 @@ export function CodeBlock({
   code, 
   language, 
   className = "", 
+  noMargin,
   filename = "", 
   allowCopy = true, 
   hideNumbers = false, 
@@ -38,7 +40,7 @@ export function CodeBlock({
   tabs = [], 
   showHeader = false,
   ...props 
-}: CodeBlockProps) {
+}: CodeBlockProps & ComponentProps) {
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
@@ -64,7 +66,7 @@ export function CodeBlock({
 
   return (
     <div
-      className={`relative rounded-lg bg-bg border border-border font-mono mb-2 text-sm ${className}`}
+      className={cn('relative rounded-lg bg-bg border border-border font-mono mb-2 text-sm', componentStyles({ noMargin, className }))}
       style={{ display: "flex", flexDirection: "column" }}
     >
       {shouldShowHeader && (

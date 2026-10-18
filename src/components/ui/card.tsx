@@ -1,13 +1,14 @@
+import type { ComponentProps } from '@/lib/types';
+import { cn, componentStyles } from '@/lib/utils';
 import { type ReactNode } from 'react';
 
-interface CardProps {
+interface CardProps extends ComponentProps {
   children: ReactNode;
-  className?: string;
 }
 
-export function Card({ children, className = '' }: CardProps) {
+export function Card({ children, className, noMargin }: CardProps) {
   return (
-    <div className={`w-full rounded-lg border border-border bg-input p-6 shadow-sm ${className}`}>
+    <div className={cn('w-full rounded-lg border border-border bg-input p-6 shadow-sm', componentStyles({ noMargin, className }))}>
       {children}
     </div>
   );

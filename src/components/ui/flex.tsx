@@ -7,7 +7,7 @@ interface FlexProps extends ComponentProps {
   orientation?: "horizontal" | "vertical";
   gap?: number | string;
   center?: boolean;
-} 
+}
 
 export function Flex({ 
   children, 

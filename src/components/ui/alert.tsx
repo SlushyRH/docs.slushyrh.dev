@@ -1,4 +1,5 @@
-import { cn } from "@/lib/utils";
+import type { ComponentProps } from "@/lib/types";
+import { cn, componentStyles } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import type { ReactNode } from "react";
 import { LuInfo, LuLightbulb, LuTriangleAlert, LuCircleX } from "react-icons/lu";
@@ -41,20 +42,19 @@ const titleColorMap = {
   caution: "text-red-500",
 };
 
-interface AlertProps extends VariantProps<typeof alertVariants> {
+interface AlertProps extends ComponentProps, VariantProps<typeof alertVariants> {
   children: ReactNode;
-  className?: string;
   title?: string; 
 }
 
-export function Alert({ type = "info", title, children, className }: AlertProps) {
+export function Alert({ type = "info", title, children, noMargin, className }: AlertProps) {
   const alertType = type || "info";
   
   const Icon = iconMap[alertType];
   const displayTitle = title || titleMap[alertType];
 
   return (
-    <div className={cn(alertVariants({ type: alertType, className }))}>
+    <div className={cn(alertVariants({ type: alertType }), componentStyles({ noMargin, className }))}>
       <div className={cn("flex items-center gap-2 font-semibold", titleColorMap[alertType])}>
         <Icon size={18} />
         <span>{displayTitle}</span>
