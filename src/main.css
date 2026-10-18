@@ -61,3 +61,8 @@ html {
   background-color: var(--bg);
   color: var(--text);
 }
+
+.component-margin {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
