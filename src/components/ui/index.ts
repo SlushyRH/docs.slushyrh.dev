@@ -11,3 +11,5 @@ export * from "./card";
 export * from "./scroll-area";
 export * from "./tabs";
 export * from "./stepper";
+export * from "./image";
+export * from "./video";
