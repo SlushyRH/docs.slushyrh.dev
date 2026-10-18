@@ -82,11 +82,16 @@ function Content({ project }: { project: ProjectMeta }) {
           <Button variant="outline" size='icon'><FaUser /></Button>
           <Button variant="ghost" size='icon'><FaUser /></Button>
         </div>
+        <div className="flex items-center gap-2">
+          <p>Tooltip: </p>
+          <Button variant='default' size='icon' tooltip='This has a tooltip'><FaUser /></Button>
+          <Button variant='default' tooltip='This has a tooltip' tooltipSide='bottom'>Default</Button>
+        </div>
       </div>
 
       <Heading>Quote</Heading>
       <Quote>
-        <Heading size='h3' className="pt-0">Custom Content</Heading>
+        <Heading size='h2' className="pt-0">Custom Content</Heading>
         <Paragraph>
           You can put any content inside a quote.
         </Paragraph>
