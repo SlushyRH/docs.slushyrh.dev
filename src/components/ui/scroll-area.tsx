@@ -3,27 +3,48 @@
 import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area";
 import { cn } from "@/lib/utils";
 
+interface ScrollAreaProps extends ScrollAreaPrimitive.Root.Props {
+  direction?: "all" | "horizontal" | "vertical";
+}
+
 function ScrollArea({
   className,
   children,
+  direction = "all",
   ...props
-}: ScrollAreaPrimitive.Root.Props) {
+}: ScrollAreaProps) {
+  const overflowClasses = {
+    all: "overflow-auto",
+    vertical: "overflow-y-auto overflow-x-hidden",
+    horizontal: "overflow-x-auto overflow-y-hidden",
+  };
+
   return (
     <ScrollAreaPrimitive.Root
       data-slot="scroll-area"
-      className={cn("relative", className)}
+      className={cn("relative overflow-hidden", className)}
       {...props}
     >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
-        className="size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1"
+        className={cn(
+          "size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1",
+          overflowClasses[direction]
+        )}
       >
         {children}
       </ScrollAreaPrimitive.Viewport>
-      <ScrollBar />
+
+      {(direction === "all" || direction === "vertical") && (
+        <ScrollBar orientation="vertical" />
+      )}
+      {(direction === "all" || direction === "horizontal") && (
+        <ScrollBar orientation="horizontal" />
+      )}
+
       <ScrollAreaPrimitive.Corner />
     </ScrollAreaPrimitive.Root>
-  )
+  );
 }
 
 function ScrollBar({
@@ -47,7 +68,7 @@ function ScrollBar({
         className="relative flex-1 rounded-full bg-primary"
       />
     </ScrollAreaPrimitive.Scrollbar>
-  )
+  );
 }
 
-export { ScrollArea, ScrollBar }
+export { ScrollArea, ScrollBar };

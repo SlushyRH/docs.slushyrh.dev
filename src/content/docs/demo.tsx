@@ -65,32 +65,34 @@ function Content({ project }: { project: ProjectMeta }) {
 
       <Heading>Buttons</Heading>
       <Flex orientation="vertical">
-        <Flex center>
-          <p>Text:</p>
-          <Button variant='default'>Default</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-        </Flex>
-        <Flex center>
-          <p>Text + Icon: </p>
-          <Button variant='default'><FaUser /> Default</Button>
-          <Button variant="secondary"><FaUser /> Secondary</Button>
-          <Button variant="outline"><FaUser /> Outline</Button>
-          <Button variant="ghost"><FaUser /> Ghost</Button>
-        </Flex>
-        <Flex center>
-          <p>Icon: </p>
-          <Button variant='default' size='icon'><FaUser /></Button>
-          <Button variant="secondary" size='icon'><FaUser /></Button>
-          <Button variant="outline" size='icon'><FaUser /></Button>
-          <Button variant="ghost" size='icon'><FaUser /></Button>
-        </Flex>
-        <Flex center>
-          <p>Tooltip: </p>
-          <Button variant='default' size='icon' tooltip='This has a tooltip'><FaUser /></Button>
-          <Button variant='default' tooltip='This has a tooltip' tooltipSide='bottom'>Default</Button>
-        </Flex>
+        <ScrollArea>
+          <Flex center>
+            <p>Text:</p>
+            <Button variant='default'>Default</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+          </Flex>
+          <Flex center>
+            <p>Text + Icon: </p>
+            <Button variant='default'><FaUser /> Default</Button>
+            <Button variant="secondary"><FaUser /> Secondary</Button>
+            <Button variant="outline"><FaUser /> Outline</Button>
+            <Button variant="ghost"><FaUser /> Ghost</Button>
+          </Flex>
+          <Flex center>
+            <p>Icon: </p>
+            <Button variant='default' size='icon'><FaUser /></Button>
+            <Button variant="secondary" size='icon'><FaUser /></Button>
+            <Button variant="outline" size='icon'><FaUser /></Button>
+            <Button variant="ghost" size='icon'><FaUser /></Button>
+          </Flex>
+          <Flex center>
+            <p>Tooltip: </p>
+            <Button variant='default' size='icon' tooltip='This has a tooltip'><FaUser /></Button>
+            <Button variant='default' tooltip='This has a tooltip' tooltipSide='bottom'>Default</Button>
+          </Flex>
+        </ScrollArea>
       </Flex>
       
       <Checkbox checked label="You can add a label." />
