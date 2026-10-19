@@ -1,18 +1,29 @@
-import { type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
+import type { ComponentProps } from '@/lib/types';
+import { cn, componentStyles } from '@/lib/utils';
 
-interface GridProps {
+interface GridProps extends ComponentProps {
   children: ReactNode;
   minWidth?: string;
-  className?: string;
+  maxColumns?: number;
 }
 
-export function Grid({ children, minWidth = '250px', className = '' }: GridProps) {
+export function Grid({ children, minWidth = '250px', maxColumns, className, noMargin }: GridProps) {
+  const gridTemplateColumns = maxColumns
+    ? `repeat(auto-fit, minmax(max(${minWidth}, calc((100% - ${(maxColumns - 1)} * 1rem) / ${maxColumns})), 1fr))`
+    : `repeat(auto-fit, minmax(${minWidth}, 1fr))`;
+
   return (
     <div 
-      className={`grid gap-4 ${className}`}
-      style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${minWidth}, 1fr))` }}
+      className={cn('grid gap-4', componentStyles({ noMargin, className }))}
+      style={{ gridTemplateColumns }}
     >
-      {children}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, { noMargin: true } as any);
+        }
+        return child;
+      })}
     </div>
   );
 }

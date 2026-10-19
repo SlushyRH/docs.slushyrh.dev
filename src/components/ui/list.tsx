@@ -1,15 +1,15 @@
 import React, { createContext, useContext, type ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import { cn, componentStyles } from "@/lib/utils";
+import type { ComponentProps } from "@/lib/types";
 
 const ListContext = createContext<number>(0);
 
-interface ListProps extends React.HTMLAttributes<HTMLUListElement | HTMLOListElement> {
+interface ListProps extends ComponentProps, React.HTMLAttributes<HTMLUListElement | HTMLOListElement> {
   children: ReactNode;
   type: "ordered" | "unordered";
-  className?: string;
 }
 
-export function List({ children, type, className, ...props }: ListProps) {
+export function List({ children, type, className, noMargin, ...props }: ListProps) {
   const depth = useContext(ListContext);
   const Tag = type === "ordered" ? "ol" : "ul";
 
@@ -20,13 +20,17 @@ export function List({ children, type, className, ...props }: ListProps) {
     listStyle = depth === 0 ? "list-disc" : depth === 1 ? "list-[circle]" : "list-[square]";
   }
 
+  // If noMargin is explicitly passed, respect it. Otherwise, default to true for nested lists.
+  const isNested = depth > 0;
+  const appliedNoMargin = noMargin !== undefined ? noMargin : isNested;
+
   return (
     <ListContext.Provider value={depth + 1}>
       <Tag
         className={cn(
           "pl-4",
           listStyle,
-          className
+          componentStyles({ noMargin: appliedNoMargin, className })
         )}
         {...props}
       >

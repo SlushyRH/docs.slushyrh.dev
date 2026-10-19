@@ -1,5 +1,7 @@
 import React, { useState, type ReactElement, type ReactNode } from 'react';
 import { Card } from './card';
+import type { ComponentProps } from '@/lib/types';
+import { cn, componentStyles } from '@/lib/utils';
 
 interface TabItemProps {
   title: string;
@@ -10,12 +12,11 @@ export function TabItem({ children }: TabItemProps) {
   return <>{children}</>;
 }
 
-interface TabsProps {
+interface TabsProps extends ComponentProps {
   children: ReactNode;
-  className?: string;
 }
 
-export function Tabs({ children, className = '' }: TabsProps) {
+export function Tabs({ children, className, noMargin }: TabsProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const tabElements = React.Children.toArray(children).filter(
@@ -23,7 +24,7 @@ export function Tabs({ children, className = '' }: TabsProps) {
   ) as ReactElement<TabItemProps>[];
 
   return (
-    <div className={`w-full bg-input border-2 border-border rounded-lg ${className}`}>
+    <div className={cn('w-full bg-input border-2 border-border rounded-lg', componentStyles({ noMargin, className }))}>
       <div className="flex space-x-1 bg-bg rounded-t-lg">
         {tabElements.map((child, index) => (
           <button

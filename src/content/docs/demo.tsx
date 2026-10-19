@@ -36,12 +36,12 @@ print("Final prices:", get_discounted_prices(items, 0.15))`;
 function Content({ project }: { project: ProjectMeta }) {
   return (
     <>
-      <Heading size='h1' className="pb-0 pt-0">Heading 1</Heading>
-      <Heading size='h2' className="pb-0 pt-0">Heading 2</Heading>
-      <Heading size='h3' className="pb-0 pt-0">Heading 3</Heading>
-      <Heading size='h4' className="pb-0 pt-0">Heading 4</Heading>
-      <Heading size='h5' className="pb-0 pt-0">Heading 5</Heading>
-      <Heading size='h6' className="pb-0 pt-0">Heading 6</Heading>
+      <Heading size='h1' noMargin>Heading 1</Heading>
+      <Heading size='h2' noMargin>Heading 2</Heading>
+      <Heading size='h3' noMargin>Heading 3</Heading>
+      <Heading size='h4' noMargin>Heading 4</Heading>
+      <Heading size='h5' noMargin>Heading 5</Heading>
+      <Heading size='h6' noMargin>Heading 6</Heading>
 
       <Space space={12} />
 
@@ -104,7 +104,7 @@ function Content({ project }: { project: ProjectMeta }) {
         <Button variant='outline'>Click Me</Button>
       </Quote>
 
-      <Heading>Columns & Cards</Heading>
+      <Heading>Grids & Cards</Heading>
       <Grid>
         <Card>
           <Paragraph>
@@ -149,6 +149,7 @@ function Content({ project }: { project: ProjectMeta }) {
         </TabItem>
       </Tabs>
 
+      <Heading>Steps</Heading>
       <Stepper>
         <Step>Step 1.1<br/>Step 1.2<br/>Step 1.3<br/></Step>
         <Step>Step 2</Step>
@@ -157,7 +158,7 @@ function Content({ project }: { project: ProjectMeta }) {
 
       <Heading>Images & Videos</Heading>
       <Video autoPlay loop src="https://images-ext-1.discordapp.net/external/ehQLPqtuj2P5BU8IP8hqlwcopyRvzvLJI42pYuvL6p4/https/media.tenor.com/1hb35pgZbqIAAAPo/nailong-dwerk.mp4" />
-      <Image caption="The one and only lord Kim Jon Un (looking pretty cute)" src="https://media.discordapp.net/attachments/743447045196480512/1554470946042159184/image.png?ex=6ad56522&is=6ad413a2&hm=801624357b9928300e0d9c68559b5bdbe30fb3e98c04907311e27937ec54a722&=&format=webp&quality=lossless" />
+      <Image caption="My Pizza mmmmmm" src="https://images.steamusercontent.com/ugc/782992988808137557/3B9CC459971B9A7E920B5C71D380C18F10072B44/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" />
 
       <Heading>Spaces & Separators</Heading>
       Above Space
@@ -166,31 +167,25 @@ function Content({ project }: { project: ProjectMeta }) {
       <Separator />
 
       <Heading>Alerts</Heading>
-      <Grid>
+      <Grid maxColumns={2}>
         <Alert type="info">
           Info details here.
         </Alert>
         <Alert type="info" title="Custom Title">
           Info details here.
         </Alert>
-      </Grid>
-      <Grid>
         <Alert type="tip">
           tip details here.
         </Alert>
         <Alert type="tip" title="Custom Title">
           tip details here.
         </Alert>
-      </Grid>
-      <Grid>
         <Alert type="warning">
           warning details here.
         </Alert>
         <Alert type="warning" title="Custom Title">
           warning details here.
         </Alert>
-      </Grid>
-      <Grid>
         <Alert type="caution">
           caution details here.
         </Alert>

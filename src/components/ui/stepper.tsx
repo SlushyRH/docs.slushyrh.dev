@@ -1,3 +1,5 @@
+import type { ComponentProps } from '@/lib/types';
+import { cn, componentStyles } from '@/lib/utils';
 import React, { type ReactNode, type ReactElement } from 'react';
 
 interface StepProps {
@@ -6,9 +8,9 @@ interface StepProps {
   className?: string;
 }
 
-export function Step({ children, stepNumber, className = '' }: StepProps) {
+export function Step({ children, stepNumber, className }: StepProps) {
   return (
-    <div className={`relative border-l-2 border-zinc-700 pl-8 pb-8 last:border-transparent ${className}`}>
+    <div className={cn('relative border-l-2 border-zinc-700 pl-8 pb-8 last:pb-0 last:border-transparent', className)}>
       
       <div className="absolute -left-4.25 top-0 flex h-8 w-8 items-center justify-center rounded-full bg-zinc-800 border border-zinc-600 text-sm font-bold text-white">
         {stepNumber}
@@ -21,16 +23,15 @@ export function Step({ children, stepNumber, className = '' }: StepProps) {
   );
 }
 
-interface StepperProps {
+interface StepperProps extends ComponentProps {
   children: ReactNode;
-  className?: string;
 }
 
-export function Stepper({ children, className = '' }: StepperProps) {
+export function Stepper({ children, className, noMargin }: StepperProps) {
   const stepElements = React.Children.toArray(children).filter(React.isValidElement) as ReactElement<StepProps>[];
 
   return (
-    <div className={`flex flex-col ml-4 mt-4 ${className}`}>
+    <div className={cn('flex flex-col ml-4', componentStyles({ noMargin, className }))}>
       {stepElements.map((child, index) => {
         return React.cloneElement(child, {
           stepNumber: index + 1,

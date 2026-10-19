@@ -1,13 +1,14 @@
-import { cn } from "@/lib/utils";
+import type { ComponentProps } from "@/lib/types";
+import { cn, componentStyles } from "@/lib/utils";
 import ReactPlayer from 'react-player';
 
-interface VideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
+interface VideoProps extends ComponentProps, React.VideoHTMLAttributes<HTMLVideoElement> {
   caption?: string;
 }
 
-export function Video({ src, caption, className, controls = true, ...props }: VideoProps) {
+export function Video({ src, caption, className, noMargin, controls = true, ...props }: VideoProps) {
   return (
-    <figure className={cn("mb-4 w-full", className)}>
+    <figure className={cn("w-full", componentStyles({ noMargin, className }))}>
       <div className="relative overflow-hidden rounded-lg border border-border bg-black aspect-video shadow-sm">
 
         <ReactPlayer 

@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { LuInfo, LuLightbulb, LuTriangleAlert, LuCircleX } from "react-icons/lu";
 
 const alertVariants = cva(
-  "w-full rounded-lg border-2 p-4 mb-4 flex flex-col gap-2",
+  "w-full rounded-lg border-2 p-4 flex flex-col gap-2",
   {
     variants: {
       type: {

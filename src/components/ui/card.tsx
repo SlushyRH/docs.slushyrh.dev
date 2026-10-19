@@ -8,7 +8,7 @@ interface CardProps extends ComponentProps {
 
 export function Card({ children, className, noMargin }: CardProps) {
   return (
-    <div className={cn('w-full rounded-lg border border-border bg-input p-6 shadow-sm', componentStyles({ noMargin, className }))}>
+    <div className={cn('w-full rounded-lg border border-border bg-input p-4 shadow-sm', componentStyles({ noMargin, className }))}>
       {children}
     </div>
   );

@@ -1,8 +1,7 @@
 import { Button as ButtonPrimitive } from "@base-ui/react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn, componentStyles } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
-import type { ComponentProps } from "@/lib/types";
 
 const buttonVariants = cva(
   "group/button inline-flex cursor-pointer shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all outline-none disabled:pointer-events-none disabled:opacity-50",
@@ -34,7 +33,6 @@ const buttonVariants = cva(
 
 export function Button({
   className,
-  noMargin,
   variant = "default",
   size = "default",
   tooltip = "",
@@ -44,11 +42,11 @@ export function Button({
   VariantProps<typeof buttonVariants> & {
     tooltip?: string,
     tooltipSide?: "top" | "bottom" | "left" | "right" | undefined,
-  } & ComponentProps) {
+  }) {
     const buttonElement = (
       <ButtonPrimitive
         data-slot="button"
-        className={cn(buttonVariants({ variant, size }), componentStyles({ noMargin, className }))}
+        className={cn(buttonVariants({ variant, size, className }))}
         {...props}
       />
     );

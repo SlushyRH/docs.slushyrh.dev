@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { cn, componentStyles } from "@/lib/utils";
+import type { ComponentProps } from "@/lib/types";
 
-interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface ImageProps extends ComponentProps, React.ImgHTMLAttributes<HTMLImageElement> {
   caption?: string;
 }
 
-export function Image({ src, alt, caption, className, ...props }: ImageProps) {
+export function Image({ src, alt, caption, className, noMargin, ...props }: ImageProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   
@@ -81,7 +82,7 @@ export function Image({ src, alt, caption, className, ...props }: ImageProps) {
 
   return (
     <>
-      <figure className={cn("mb-4 w-full", className)}>
+      <figure className={cn("w-full", componentStyles({ noMargin, className }))}>
         <div className="overflow-hidden rounded-lg border border-border bg-black shadow-sm">
           <img 
             ref={imgRef}
