@@ -239,6 +239,7 @@ function Content({ project }: { project: ProjectMeta }) {
         </Table>
       </ScrollArea>
 
+      <Heading>Expandable</Heading>
       <Expandable title="Expand Me" icon={FaUser}>
         <Paragraph>Add any content here</Paragraph>
       </Expandable>
