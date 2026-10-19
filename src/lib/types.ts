@@ -41,4 +41,6 @@ export interface DocPageMeta {
   Content: React.FC<{project: ProjectMeta}>
   order?: number;
   section?: string;
+  description?: string;
+  plainText?: string;
 }
