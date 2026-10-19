@@ -1,4 +1,4 @@
-import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Grid, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator, Code, Flex, Checkbox, Table, TableHeader, TableRow, TableHead, TableCell, TableBody } from "@/components/ui";
+import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Grid, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator, Code, Flex, Checkbox, Table, TableHeader, TableRow, TableHead, TableCell, TableBody, Expandable } from "@/components/ui";
 import { List, ListItem } from "@/components/ui/list";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
@@ -236,8 +236,12 @@ function Content({ project }: { project: ProjectMeta }) {
           </TableBody>
         </Table>
       </ScrollArea>
+
+      <Expandable title="Expand Me" icon={FaUser}>
+        <Paragraph>Add any content here</Paragraph>
+      </Expandable>
     </>
-  )
+  );
 }
 
 export const page: DocPageMeta = {
