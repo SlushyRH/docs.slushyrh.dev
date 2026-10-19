@@ -18,3 +18,4 @@ export * from "./video";
 export * from "./alert";
 export * from "./link";
 export * from "./flex";
+export * from "./table";

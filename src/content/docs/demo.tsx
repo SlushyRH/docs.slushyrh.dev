@@ -1,4 +1,4 @@
-import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Grid, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator, Code, Flex, Checkbox } from "@/components/ui";
+import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Grid, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator, Code, Flex, Checkbox, Table, TableHeader, TableRow, TableHead, TableCell, TableBody } from "@/components/ui";
 import { List, ListItem } from "@/components/ui/list";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
@@ -126,7 +126,7 @@ function Content({ project }: { project: ProjectMeta }) {
       </Grid>
 
       <Heading>Scroll Area</Heading>
-      <Card className="">
+      <Card>
         <ScrollArea className='h-24'>
           <Paragraph>Paragraph 1 is the first paragraph.</Paragraph>
           <Paragraph>Paragraph 2 is the NOT first paragraph.</Paragraph>
@@ -213,6 +213,34 @@ function Content({ project }: { project: ProjectMeta }) {
         </List>
         <ListItem>Third Item</ListItem>
       </List>
+
+      <Heading>Tables</Heading>
+      <ScrollArea>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-37.5">Property</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead align="right">Required</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="font-medium">projectId</TableCell>
+              <TableCell>string</TableCell>
+              <TableCell>The unique identifier for the project.</TableCell>
+              <TableCell>Yes</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">className</TableCell>
+              <TableCell>string</TableCell>
+              <TableCell>Optional Tailwind CSS classes to append.</TableCell>
+              <TableCell>No</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </ScrollArea>
     </>
   )
 }

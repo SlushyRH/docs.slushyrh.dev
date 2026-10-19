@@ -40,7 +40,7 @@ export function Tabs({ children, className = '' }: TabsProps) {
         ))}
       </div>
 
-      <Card className="rounded-tl-none border-t-0">
+      <Card noMargin className="rounded-tl-none border-t-0 shadow-none px-2 py-2">
         {tabElements[activeTabIndex]}
       </Card>
     </div>
