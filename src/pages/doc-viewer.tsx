@@ -181,6 +181,7 @@ export function DocViewerPage() {
   }
 
   const title = `${targetPage.data.label} | ${projectMeta.title}`;
+  const description = targetPage.data.description;
   const PageContent = targetPage.data.Content;
 
   const projectPages = Object.entries(allPages)
@@ -251,6 +252,7 @@ export function DocViewerPage() {
     <>
       <Helmet>
         <title>{title}</title>
+        <meta name="description" content={description} />
         {projectMeta.logoUrl && (
           <link rel="icon" href={projectMeta.logoUrl} />
         )}

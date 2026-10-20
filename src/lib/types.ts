@@ -20,7 +20,6 @@ export interface ProjectMeta {
   slug: string;
   logoUrl?: string;
   title: string;
-  description: string;
   redirectSlug: string;
   sections?: DocSectionMeta[] | null;
   links?: Link[] | null;
