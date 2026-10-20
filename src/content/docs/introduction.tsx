@@ -4,7 +4,7 @@ import type { DocPageMeta } from "@/lib/types";
 function Content() {
   return (
     <>
-      <Heading size='h1' className="pb-0">Introduction</Heading>
+      <Heading size='h1'>Introduction</Heading>
       <Paragraph>
         This is an introduction to my custom documentation site.
       </Paragraph>
