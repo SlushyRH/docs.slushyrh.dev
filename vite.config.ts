@@ -32,18 +32,18 @@ function plainTextExportPlugin(): Plugin {
       .replace(/\/\*[\s\S]*?\*\//g, '')
       .replace(/\/\/.*/g, '');
 
-    // 4. Extract text nodes inside JSX elements (> text <)
-    const jsxTextRegex = />([^<>{}\r\n]+)</g;
-    while ((match = jsxTextRegex.exec(codeWithoutComments)) !== null) {
-      const textNode = match[1].trim();
-      if (textNode) {
-        extractedText.push(textNode);
+    const jsxTextRegex = />([^<>{}]+)</g;
+      while ((match = jsxTextRegex.exec(codeWithoutComments)) !== null) {
+        const textNode = match[1].trim();
+        if (textNode) {
+          extractedText.push(textNode);
+        }
       }
-    }
 
     return extractedText
       .join(' ')
       .replace(/\s+/g, ' ')
+      .replace(/\s+([,.;!?:])/g, '$1')
       .trim();
   };
 
@@ -93,6 +93,7 @@ function plainTextExportPlugin(): Plugin {
 
   return {
     name: 'vite-plugin-plain-text-export',
+    enforce: 'pre',
 
     configResolved(config) {
       isBuild = config.command === 'build';
@@ -112,7 +113,7 @@ function plainTextExportPlugin(): Plugin {
         !id.endsWith('index.tsx') &&
         !id.endsWith('_index.tsx')
       ) {
-        const rawText = cleanText(code);
+        const rawText = cleanText(code).toLowerCase();
 
         if (!code.includes('plainText:')) {
           const pageExportRegex = /(export\s+const\s+page(?:\s*:\s*[\w<>]+)?\s*=\s*\{)/;
@@ -136,8 +137,8 @@ export default defineConfig({
     },
   },
   plugins: [
+    plainTextExportPlugin(),
     react(),
     tailwindcss(),
-    plainTextExportPlugin(),
   ],
 });
