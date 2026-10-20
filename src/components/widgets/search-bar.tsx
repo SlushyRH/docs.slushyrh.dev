@@ -130,24 +130,13 @@ export function SearchBar({ project }: SearchBarProps) {
     <>
       <>
         <Button
-          variant="ghost"
+          variant="mobile"
           size="icon"
           onClick={() => setIsOpen(true)}
           aria-label="Open Search"
-          className="md:hidden"
         >
           <LuSearch size={20} />
         </Button>
-
-        <Button
-        variant="outline"
-        size="icon"
-        onClick={() => setIsOpen(true)}
-        aria-label="Open Search"
-        className=" hidden md:flex"
-      >
-        <LuSearch size={20} />
-      </Button>
       </>
 
       {isOpen &&

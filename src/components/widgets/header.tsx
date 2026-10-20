@@ -37,11 +37,18 @@ export function Header({ project, onMenuClick }: HeaderProps) {
       </div>
 
       <div className="flex lg:px-0 xl:px-40 items-center justify-end gap-2">
-        <Button variant="outline" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} className="hidden md:flex">
-            {theme === 'dark' ? <LuMoon size={20} /> : <LuSun size={20} />}
-        </Button>
+        {project.links?.map((link, idx) => {
+          const Icon = link.icon;
+          return (
+            <NavLink to={link.url} target="_blank" key={idx}>
+              <Button variant="mobile" size="icon" tooltip={link.title} >
+                {Icon && <Icon size={18} />}
+              </Button>
+            </NavLink>
+          )
+        })}
 
-        <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} className="md:hidden">
+        <Button variant="mobile" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
             {theme === 'dark' ? <LuMoon size={20} /> : <LuSun size={20} />}
         </Button>
 
