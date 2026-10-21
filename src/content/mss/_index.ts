@@ -2,7 +2,7 @@ import type { ProjectMeta } from "@/lib/types";
 import { FaGithub } from "react-icons/fa";
 
 const projectMeta: ProjectMeta = {
-  slug: 'docs',
+  slug: 'mss',
   title: 'Documentation',
   redirectSlug: 'demo',
   links: [

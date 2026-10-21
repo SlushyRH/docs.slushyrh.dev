@@ -60,6 +60,8 @@
 html {
   background-color: var(--bg);
   color: var(--text);
+
+  scrollbar-gutter: stable;
 }
 
 .component-margin {

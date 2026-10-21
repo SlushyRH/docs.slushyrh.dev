@@ -181,7 +181,6 @@ export function DocViewerPage() {
   }
 
   const title = `${targetPage.data.label} | ${projectMeta.title}`;
-  const description = targetPage.data.description;
   const PageContent = targetPage.data.Content;
 
   const projectPages = Object.entries(allPages)
@@ -252,7 +251,7 @@ export function DocViewerPage() {
     <>
       <Helmet>
         <title>{title}</title>
-        <meta name="description" content={description} />
+        <meta name="description" content={targetPage.data.description} />
         {projectMeta.logoUrl && (
           <link rel="icon" href={projectMeta.logoUrl} />
         )}
@@ -260,36 +259,42 @@ export function DocViewerPage() {
 
       <Header project={projectMeta} onMenuClick={() => setIsSidebarOpen(true)} />
       
-      <div className="flex lg:px-0 w-full max-w-400 mx-auto">
+      {/* FIX 1: Restored max-w-[1600px] instead of the invalid max-w-400 */}
+      <div className="flex lg:px-0 w-full max-w-[1600px] mx-auto">
         <Sidebar projectId={projectId!} projectMeta={projectMeta} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-        <main className="flex-1 min-w-0 p-8 lg:p-12 flex flex-col">
-          <article className="prose prose-invert max-w-none flex-1">
-            <PageContent project={projectMeta} />
-          </article>
+        {/* FIX 2: Added flex justify-center so the inner container is perfectly centered */}
+        <main className="flex-1 min-w-0 p-8 lg:p-12 flex justify-center">
+          
+          {/* FIX 3: Added a centered w-full max-w-4xl wrapper to lock the document width */}
+          <div className="w-full max-w-4xl flex flex-col h-full">
+            <article className="prose prose-invert max-w-none flex-1">
+              <PageContent project={projectMeta} />
+            </article>
 
-          <div className="flex items-center justify-between pt-6 border-t border-border">
-            {prevPage ? (
-              <Link to={`/${projectId}/${prevPage.path}`}>
-                <Button variant="outline" size='lg'>
-                  <LuArrowLeft />
-                  {prevPage.label}
-                </Button>
-              </Link>
-            ) : (
-              <div />
-            )}
+            <div className="flex items-center justify-between pt-6 mt-12 border-t border-border">
+              {prevPage ? (
+                <Link to={`/${projectId}/${prevPage.path}`}>
+                  <Button variant="outline" size='lg'>
+                    <LuArrowLeft className="mr-2" />
+                    {prevPage.label}
+                  </Button>
+                </Link>
+              ) : (
+                <div />
+              )}
 
-            {nextPage ? (
-              <Link to={`/${projectId}/${nextPage.path}`}>
-                <Button variant="outline" size='lg'>
-                  {nextPage.label}
-                  <LuArrowRight />
-                </Button>
-              </Link>
-            ) : (
-              <div />
-            )}
+              {nextPage ? (
+                <Link to={`/${projectId}/${nextPage.path}`}>
+                  <Button variant="outline" size='lg'>
+                    {nextPage.label}
+                    <LuArrowRight className="ml-2" />
+                  </Button>
+                </Link>
+              ) : (
+                <div />
+              )}
+            </div>
           </div>
         </main>
 
