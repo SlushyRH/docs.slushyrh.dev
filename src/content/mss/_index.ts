@@ -2,7 +2,6 @@ import type { ProjectMeta } from "@/lib/types";
 import { FaItchIo, FaUnity } from "react-icons/fa";
 
 const projectMeta: ProjectMeta = {
-  slug: 'mss',
   title: 'Documentation',
   redirectSlug: 'demo',
   links: [

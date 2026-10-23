@@ -48,7 +48,7 @@ function Content({ project }: { project: ProjectMeta }) {
       <Heading>Paragraphs</Heading>
       <Paragraph>
         This is a paragraph, it's pretty basic. You can write <b>bold</b>, <i>italics</i>, and anything else since it's normal HTML.
-        You can also include links, either to other pages <Link href={`/${project.slug}/intro`}>another page</Link>, or
+        You can also include links, either to other pages <Link href={`/${project}/intro`}>another page</Link>, or
         an <Link href="https://slushyrh.dev" sameTab={false}>external page</Link>.
       </Paragraph>
 
@@ -248,7 +248,6 @@ function Content({ project }: { project: ProjectMeta }) {
 }
 
 export const page: DocPageMeta = {
-  slug: 'demo',
   label: 'Basic Demo',
   order: 1,
   Content: Content

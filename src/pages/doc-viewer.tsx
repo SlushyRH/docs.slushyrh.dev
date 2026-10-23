@@ -4,7 +4,7 @@ import { Header } from "@/components/widgets/header";
 import { allPages, folders, projects } from "@/content/_index";
 import { Helmet } from "react-helmet-async";
 import { Navigate, useParams } from "react-router-dom";
-import { NotFoundPage } from "./404"; // Your global 404, if this remains here
+import { NotFoundPage } from "./404"; 
 
 // Widgets
 import { OnThisPage } from "@/components/widgets/on-this-page";
@@ -23,11 +23,13 @@ export function DocViewerPage() {
   if (!docPath || docPath.trim() === '')
     return <Navigate to={`/${projectId}/${projectMeta.redirectSlug}`} replace />;
 
-  const folderMeta = folders[docPath];
+  // Prefix docPath with projectId to match the new unique key
+  const folderMeta = folders[`${projectId}/${docPath}`];
   if (folderMeta && folderMeta.redirectSlug)
     return <Navigate to={`/${projectId}/${docPath}/${folderMeta.redirectSlug}`} replace />;
 
-  const targetPage = allPages[docPath];
+  // Prefix docPath with projectId to match the new unique key
+  const targetPage = allPages[`${projectId}/${docPath}`];
 
   if (!targetPage) {
     return <PageMissing projectId={projectId || ''} projectMeta={projectMeta} />;
@@ -38,7 +40,8 @@ export function DocViewerPage() {
 
   const projectPages = Object.entries(allPages)
     .filter(([_, pageData]) => pageData.projectId === projectId)
-    .map(([path, pageData]) => ({ path, ...pageData.data }));
+    // Extract path from the object, not the dictionary key
+    .map(([_, pageData]) => ({ path: pageData.path, ...pageData.data }));
 
   const tree: Record<string, any[]> = {};
   const sections = projectMeta.sections || []; 
@@ -54,7 +57,9 @@ export function DocViewerPage() {
       tree[sectionId].push({ type: 'page', ...page });
     } else {
       const folderPath = pathParts.slice(0, -1).join('/');
-      const folderMeta = folders[folderPath]; 
+      
+      // Prefix folderPath with projectId to look up the correct meta
+      const folderMeta = folders[`${projectId}/${folderPath}`]; 
       
       const requestedSection = folderMeta?.section || page.section || 'root';
       const sectionId = tree[requestedSection] ? requestedSection : 'root';

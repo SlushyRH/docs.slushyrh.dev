@@ -13,7 +13,6 @@ function Content() {
 }
 
 export const page: DocPageMeta = {
-  slug: 'intro',
   label: 'Intoduction',
   order: 0,
   Content: Content

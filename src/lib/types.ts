@@ -17,7 +17,7 @@ export interface DocSectionMeta {
 }
 
 export interface ProjectMeta {
-  slug: string;
+  id?: string;
   logoUrl?: string;
   title: string;
   redirectSlug: string;
@@ -26,7 +26,6 @@ export interface ProjectMeta {
 }
 
 export interface DocFolderMeta {
-  slug: string;
   label: string;
   collapsable: boolean;
   redirectSlug: string;
@@ -35,7 +34,6 @@ export interface DocFolderMeta {
 }
 
 export interface DocPageMeta {
-  slug: string;
   label: string;
   Content: React.FC<{project: ProjectMeta}>
   order?: number;

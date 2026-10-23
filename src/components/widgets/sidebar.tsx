@@ -14,7 +14,8 @@ interface SidebarProps {
 export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProps) {
   const projectPages = Object.entries(allPages)
     .filter(([_, pageData]) => pageData.projectId === projectId)
-    .map(([path, pageData]) => ({ path, ...pageData.data }));
+    // Extract path from the object, not the dictionary key
+    .map(([_, pageData]) => ({ path: pageData.path, ...pageData.data }));
 
   const tree: Record<string, any[]> = {};
   
@@ -32,11 +33,10 @@ export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProp
       const sectionId = tree[page.section || ''] ? page.section! : 'root';
       tree[sectionId].push({ type: 'page', ...page });
     } else {
-      // extract the folder path
       const folderPath = pathParts.slice(0, -1).join('/');
-      const folderMeta = folders[folderPath]; 
+      // Look up folder meta using the unique composite key
+      const folderMeta = folders[`${projectId}/${folderPath}`]; 
       
-      // look for the section on the folder first, then the page, then fallback to root
       const requestedSection = folderMeta?.section || page.section || 'root';
       const sectionId = tree[requestedSection] ? requestedSection : 'root';
       
