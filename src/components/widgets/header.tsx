@@ -2,7 +2,7 @@ import type { ProjectMeta } from "@/lib/types";
 import { LuMenu, LuSun, LuMoon } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "@/components/providers/theme-provider";
-import { Button } from "../ui";
+import { Button, Separator } from "../ui";
 import { SearchBar } from "./search-bar";
 
 interface HeaderProps {
@@ -47,6 +47,10 @@ export function Header({ project, onMenuClick }: HeaderProps) {
             </NavLink>
           )
         })}
+
+        {project.links && (
+          <Separator direction="vertical" className="mx-0.5 min-h-[2rem]" />
+        )}
 
         <Button variant="mobile" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
             {theme === 'dark' ? <LuMoon size={20} /> : <LuSun size={20} />}
