@@ -4,6 +4,7 @@ import { FaItchIo, FaUnity } from "react-icons/fa";
 const projectMeta: ProjectMeta = {
   title: 'Documentation',
   redirectSlug: 'demo',
+  logoUrl: '/snowcap-icon.png',
   links: [
     { title: 'Asset Store', url: 'https://github.com/SlushyRH/', icon: FaUnity },
     { title: 'Itch', url: 'https://github.com/SlushyRH/', icon: FaItchIo }
