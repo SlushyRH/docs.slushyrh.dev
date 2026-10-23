@@ -1,4 +1,4 @@
-import type { ProjectMeta, DocPageMeta, DocFolderMeta } from "@/lib/types";
+import type { ProjectMeta, DocPageMeta } from "@/lib/types";
 
 const metaModules = import.meta.glob<{ default: any }>(
   ["./**/_index.ts", "!./_index.ts"],
@@ -11,8 +11,7 @@ const pageModules = import.meta.glob<{ page: DocPageMeta }>(
 );
 
 export const projects: Record<string, ProjectMeta> = {};
-export const folders: Record<string, DocFolderMeta> = {};
-export const allPages: Record<string, { path: string; data: DocPageMeta; projectId: string }> = {};
+export const allPages: Record<string, { path: string; data: DocPageMeta; projectId: string; isIndex: boolean }> = {};
 
 for (const filePath in metaModules) {
   const mod = metaModules[filePath];
@@ -23,9 +22,6 @@ for (const filePath in metaModules) {
 
   if (pathParts.length === 3) {
     projects[projectId] = { ...mod.default, id: projectId } as ProjectMeta;
-  } else if (pathParts.length > 3) {
-    const folderPath = pathParts.slice(2, -1).join('/'); 
-    folders[`${projectId}/${folderPath}`] = mod.default as DocFolderMeta;
   }
 }
 
@@ -39,13 +35,18 @@ for (const filePath in pageModules) {
   
   const folderDirectories = pathParts.slice(2, -1);
   const pageSlug = pathParts[pathParts.length - 1].replace(/\.tsx$/, '');
+  const isIndex = pageSlug === 'index';
   
-  const relativePath = [...folderDirectories, pageSlug].filter(Boolean).join('/');
+  const relativePath = isIndex 
+    ? folderDirectories.join('/')
+    : [...folderDirectories, pageSlug].filter(Boolean).join('/');
+    
   const uniqueKey = `${projectId}/${relativePath}`;
 
   allPages[uniqueKey] = {
     path: relativePath,
     data: mod.page,
     projectId: projectId,
+    isIndex
   };
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Sidebar } from "@/components/widgets/sidebar";
 import { Header } from "@/components/widgets/header";
-import { allPages, folders, projects } from "@/content/_index";
+import { allPages, projects } from "@/content/_index";
 import { Helmet } from "react-helmet-async";
 import { Navigate, useParams } from "react-router-dom";
 import { NotFoundPage } from "./404"; 
@@ -11,27 +11,34 @@ import { OnThisPage } from "@/components/widgets/on-this-page";
 import { Pagination } from "@/components/widgets/pagination";
 import { PageMissing } from "@/components/widgets/page-missing";
 
+function formatFolderName(folderName: string) {
+  return folderName.charAt(0).toUpperCase() + folderName.slice(1).replace(/-/g, ' ');
+}
+
 export function DocViewerPage() {
   const { projectId, '*': docPath } = useParams<{ projectId: string; '*': string; }>();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const projectMeta = projects[projectId || ''];
   
-  if (!projectMeta)
-    return <NotFoundPage />;
+  if (!projectMeta) return <NotFoundPage />;
 
   if (!docPath || docPath.trim() === '')
     return <Navigate to={`/${projectId}/${projectMeta.redirectSlug}`} replace />;
 
-  // Prefix docPath with projectId to match the new unique key
-  const folderMeta = folders[`${projectId}/${docPath}`];
-  if (folderMeta && folderMeta.redirectSlug)
-    return <Navigate to={`/${projectId}/${docPath}/${folderMeta.redirectSlug}`} replace />;
-
-  // Prefix docPath with projectId to match the new unique key
-  const targetPage = allPages[`${projectId}/${docPath}`];
+  let targetPage = allPages[`${projectId}/${docPath}`];
 
   if (!targetPage) {
+    const childPages = Object.values(allPages).filter(
+      p => p.projectId === projectId && p.path.startsWith(`${docPath}/`)
+    );
+
+    if (childPages.length > 0) {
+      // Find the first child page directly and navigate to its path
+      const firstChild = childPages.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))[0];
+      return <Navigate to={`/${projectId}/${firstChild.path}`} replace />;
+    }
+
     return <PageMissing projectId={projectId || ''} projectMeta={projectMeta} />;
   }
 
@@ -40,8 +47,7 @@ export function DocViewerPage() {
 
   const projectPages = Object.entries(allPages)
     .filter(([_, pageData]) => pageData.projectId === projectId)
-    // Extract path from the object, not the dictionary key
-    .map(([_, pageData]) => ({ path: pageData.path, ...pageData.data }));
+    .map(([_, pageData]) => ({ path: pageData.path, ...pageData.data, isIndex: pageData.isIndex }));
 
   const tree: Record<string, any[]> = {};
   const sections = projectMeta.sections || []; 
@@ -52,53 +58,70 @@ export function DocViewerPage() {
     const pathParts = page.path.split('/');
     const isRootPage = pathParts.length === 1;
 
-    if (isRootPage) {
-      const sectionId = tree[page.section || ''] ? page.section! : 'root';
+    const requestedSection = page.section || 'root';
+    const sectionId = tree[requestedSection] ? requestedSection : 'root';
+
+    if (isRootPage && !page.isIndex) {
       tree[sectionId].push({ type: 'page', ...page });
     } else {
-      const folderPath = pathParts.slice(0, -1).join('/');
+      const folderPathParts = page.isIndex ? pathParts : pathParts.slice(0, -1);
       
-      // Prefix folderPath with projectId to look up the correct meta
-      const folderMeta = folders[`${projectId}/${folderPath}`]; 
+      let currentLevel = tree[sectionId];
+      let currentPath = '';
+      let folderNode = null;
       
-      const requestedSection = folderMeta?.section || page.section || 'root';
-      const sectionId = tree[requestedSection] ? requestedSection : 'root';
-      
-      let folderNode = tree[sectionId].find((n: any) => n.type === 'folder' && n.path === folderPath);
-      if (!folderNode) {
-        folderNode = { type: 'folder', path: folderPath, meta: folderMeta, pages: [] };
-        tree[sectionId].push(folderNode);
+      for (let i = 0; i < folderPathParts.length; i++) {
+        const part = folderPathParts[i];
+        currentPath = currentPath ? `${currentPath}/${part}` : part;
+        
+        let existing = currentLevel.find((n: any) => n.type === 'folder' && n.path === currentPath);
+        if (!existing) {
+          existing = { type: 'folder', path: currentPath, label: formatFolderName(part), items: [], indexPage: null };
+          currentLevel.push(existing);
+        }
+        folderNode = existing;
+        currentLevel = existing.items;
       }
-      folderNode.pages.push({ type: 'page', ...page });
+      
+      if (folderNode) {
+        if (page.isIndex) {
+          folderNode.indexPage = page;
+        } else {
+          folderNode.items.push({ type: 'page', ...page });
+        }
+      }
     }
   });
 
-  Object.keys(tree).forEach(key => { 
-    tree[key].sort((a, b) => { 
-      const orderA = a.type === 'folder' ? (a.meta?.order ?? 99) : (a.order ?? 99); 
-      const orderB = b.type === 'folder' ? (b.meta?.order ?? 99) : (b.order ?? 99); 
-      return orderA - orderB; 
+  function sortTree(items: any[]) {
+    items.sort((a, b) => {
+      const orderA = a.type === 'folder' ? (a.indexPage?.order ?? 99) : (a.order ?? 99);
+      const orderB = b.type === 'folder' ? (b.indexPage?.order ?? 99) : (b.order ?? 99);
+      return orderA - orderB;
     });
-    tree[key].forEach(node => {
-      if (node.type === 'folder') {
-        node.pages.sort((a: any, b: any) => (a.order ?? 99) - (b.order ?? 99));
-      }
+    items.forEach(node => {
+      if (node.type === 'folder') sortTree(node.items);
     });
-  });
+  }
+
+  Object.keys(tree).forEach(key => sortTree(tree[key]));
 
   const flatPages: any[] = [];
   const renderOrder = ['root', ...sections.map((s: any) => s.id)];
   
-  renderOrder.forEach(sectionId => {
-    const items = tree[sectionId];
-    if (!items) return;
+  function flattenNodes(items: any[]) {
     items.forEach(node => {
-      if (node.type === 'page') {
+      if (node.type === 'folder') {
+        if (node.indexPage) flatPages.push(node.indexPage);
+        flattenNodes(node.items);
+      } else {
         flatPages.push(node);
-      } else if (node.type === 'folder') {
-        node.pages.forEach((page: any) => flatPages.push(page));
       }
     });
+  }
+  
+  renderOrder.forEach(sectionId => {
+    if (tree[sectionId]) flattenNodes(tree[sectionId]);
   });
 
   const currentIndex = flatPages.findIndex(p => p.path === docPath);

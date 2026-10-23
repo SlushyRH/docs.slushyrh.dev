@@ -1,5 +1,5 @@
 import type { ProjectMeta } from '@/lib/types';
-import { allPages, folders } from '@/content/_index'; 
+import { allPages } from '@/content/_index'; 
 import SidebarItem from './sidebar-item';
 import { LuX } from 'react-icons/lu';
 import { Button } from '../ui';
@@ -11,11 +11,14 @@ interface SidebarProps {
   onClose?: () => void;
 }
 
+function formatFolderName(folderName: string) {
+  return folderName.charAt(0).toUpperCase() + folderName.slice(1).replace(/-/g, ' ');
+}
+
 export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProps) {
   const projectPages = Object.entries(allPages)
     .filter(([_, pageData]) => pageData.projectId === projectId)
-    // Extract path from the object, not the dictionary key
-    .map(([_, pageData]) => ({ path: pageData.path, ...pageData.data }));
+    .map(([_, pageData]) => ({ path: pageData.path, ...pageData.data, isIndex: pageData.isIndex }));
 
   const tree: Record<string, any[]> = {};
   
@@ -29,78 +32,80 @@ export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProp
     const pathParts = page.path.split('/'); 
     const isRootPage = pathParts.length === 1;
     
-    if (isRootPage) {
-      const sectionId = tree[page.section || ''] ? page.section! : 'root';
+    const requestedSection = page.section || 'root';
+    const sectionId = tree[requestedSection] ? requestedSection : 'root';
+    
+    if (isRootPage && !page.isIndex) {
       tree[sectionId].push({ type: 'page', ...page });
     } else {
-      const folderPath = pathParts.slice(0, -1).join('/');
-      // Look up folder meta using the unique composite key
-      const folderMeta = folders[`${projectId}/${folderPath}`]; 
+      const folderPathParts = page.isIndex ? pathParts : pathParts.slice(0, -1);
       
-      const requestedSection = folderMeta?.section || page.section || 'root';
-      const sectionId = tree[requestedSection] ? requestedSection : 'root';
+      let currentLevel = tree[sectionId];
+      let currentPath = '';
+      let folderNode = null;
       
-      let folderNode = tree[sectionId].find(n => n.type === 'folder' && n.path === folderPath);
-      if (!folderNode) {
-        folderNode = { 
-          type: 'folder', 
-          path: folderPath, 
-          meta: folderMeta, 
-          pages: [] 
-        };
-        tree[sectionId].push(folderNode);
+      // Build nested folder structure
+      for (let i = 0; i < folderPathParts.length; i++) {
+        const part = folderPathParts[i];
+        currentPath = currentPath ? `${currentPath}/${part}` : part;
+        
+        let existing = currentLevel.find(n => n.type === 'folder' && n.path === currentPath);
+        if (!existing) {
+          existing = { 
+            type: 'folder', 
+            path: currentPath, 
+            label: formatFolderName(part),
+            items: [],
+            indexPage: null
+          };
+          currentLevel.push(existing);
+        }
+        folderNode = existing;
+        currentLevel = existing.items;
       }
-      folderNode.pages.push({ type: 'page', ...page });
+      
+      if (folderNode) {
+        if (page.isIndex) {
+          folderNode.indexPage = page;
+          folderNode.label = page.label || folderNode.label; 
+        } else {
+          folderNode.items.push({ type: 'page', ...page });
+        }
+      }
     }
   });
 
-  // sort items
-  Object.keys(tree).forEach(key => {
-    tree[key].sort((a, b) => {
-      const orderA = a.type === 'folder' ? (a.meta?.order ?? 99) : (a.order ?? 99);
-      const orderB = b.type === 'folder' ? (b.meta?.order ?? 99) : (b.order ?? 99);
+  // Sort nodes recursively
+  function sortTree(items: any[]) {
+    items.sort((a, b) => {
+      const orderA = a.type === 'folder' ? (a.indexPage?.order ?? 99) : (a.order ?? 99);
+      const orderB = b.type === 'folder' ? (b.indexPage?.order ?? 99) : (b.order ?? 99);
       return orderA - orderB;
     });
-    
-    tree[key].forEach(node => {
+    items.forEach(node => {
       if (node.type === 'folder') {
-        node.pages.sort((a: any, b: any) => (a.order ?? 99) - (b.order ?? 99));
+        sortTree(node.items);
       }
     });
-  });
+  }
+
+  Object.keys(tree).forEach(key => sortTree(tree[key]));
 
   return (
     <>
-      {/* Mobile Overlay */}
       {isOpen && (
         <>
-          <div 
-            className="fixed inset-0 z-40 backdrop-blur-sm bg-black/40 lg:hidden"
-            onClick={onClose}
-          />
-          <Button 
-            variant="outline" 
-            size="icon" 
-            onClick={onClose} 
-            className="fixed top-4 right-4 z-50 lg:hidden" 
-            aria-label="Close sidebar"
-          >
+          <div className="fixed inset-0 z-40 backdrop-blur-sm bg-black/40 lg:hidden" onClick={onClose} />
+          <Button variant="outline" size="icon" onClick={onClose} className="fixed top-4 right-4 z-50 lg:hidden" aria-label="Close sidebar">
             <LuX size={20} />
           </Button>
         </>
       )}
 
-      {/* Sidebar Panel */}
-      <aside className={`fixed inset-y-0 bg-bg left-0 z-50 w-[75%] lg:w-64 transform overflow-y-auto border-r border-border p-4 transition-transform duration-300 ease-in-out lg:sticky lg:top-14 lg:z-0 lg:block lg:h-[calc(100vh-3.5rem)] ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
-        
-        {/* Mobile Header with Close Button */}
+      <aside className={`fixed inset-y-0 bg-bg left-0 z-50 w-[75%] lg:w-80 transform overflow-y-auto border-r border-border p-4 transition-transform duration-300 ease-in-out lg:sticky lg:top-14 lg:z-0 lg:block lg:h-[calc(100vh-3.5rem)] ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         <div className="mb-6 flex items-center gap-2 lg:hidden">
           {projectMeta.logoUrl && (
-            <img 
-              src={projectMeta.logoUrl} 
-              alt={`${projectMeta.title} logo`} 
-              className="h-6 w-6 object-contain" 
-            />
+            <img src={projectMeta.logoUrl} alt={`${projectMeta.title} logo`} className="h-6 w-6 object-contain" />
           )}
           <span className="font-bold text-lg">{projectMeta.title}</span>
         </div>

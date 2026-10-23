@@ -25,17 +25,9 @@ export interface ProjectMeta {
   links?: Link[] | null;
 }
 
-export interface DocFolderMeta {
-  label: string;
-  collapsable: boolean;
-  redirectSlug: string;
-  order?: number;
-  section?: string;
-}
-
 export interface DocPageMeta {
   label: string;
-  Content: React.FC<{project: ProjectMeta}>
+  Content: React.FC<{project: ProjectMeta}>;
   order?: number;
   section?: string;
   description?: string;
