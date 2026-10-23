@@ -12,7 +12,7 @@ function Content() {
 }
 
 export const page: DocPageMeta = {
-  slug: 'page',
   label: 'Page',
-  Content: Content
+  Content: Content,
+  order: 0,
 }
