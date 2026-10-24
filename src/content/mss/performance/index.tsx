@@ -5,7 +5,10 @@ function Content() {
   return (
     <>
       <Heading>Title</Heading>
-      <Paragraph>Paragraph performance</Paragraph>
+      <Paragraph>talk about performance in mss</Paragraph>
+
+      <Heading>Benchmark Setup</Heading>
+      <Paragraph>show code for bench mark setup</Paragraph>
     </>
   )
 }

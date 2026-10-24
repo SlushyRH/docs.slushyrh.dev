@@ -6,7 +6,7 @@ function Content({ project }: { project: ProjectMeta }) {
     <>
       <Heading>Introduction</Heading>
       <Paragraph>
-        Welcome to <strong>Modular Save System (MSS)</strong>, a robust, flexible, and developer-friendly data persistence solution built specifically for Unity. Designed to eliminate the boilerplate and fragility typically associated with game state saving, MSS provides a rock-solid foundation for projects of any scale—from rapid prototypes to production-ready commercial titles.
+        Welcome to <strong>Modular Save System (MSS)</strong>, a robust, flexible, and developer-friendly data persistence solution built specifically for Unity. Designed to eliminate the boilerplate and fragility typically associated with game state saving, MSS provides a rock-solid foundation for projects of any scale; from rapid prototypes to production-ready commercial titles.
       </Paragraph>
       <Paragraph>
         Whether you need to serialize player stats, inventory inventories, complex scene hierarchies, or custom game states, MSS handles the heavy lifting behind the scenes while keeping your codebase clean, decoupled, and maintainable.
@@ -47,7 +47,7 @@ function Content({ project }: { project: ProjectMeta }) {
 }
 
 export const page: DocPageMeta = {
-  label: 'Introduction',
+  label: 'What Is MSS',
   order: -9999,
   section: 'overview',
   Content: Content

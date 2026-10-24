@@ -4,17 +4,15 @@ import type { DocPageMeta } from "@/lib/types";
 function Content() {
   return (
     <>
-      <Heading>Support</Heading>
-      <Paragraph>
-        talk about differnet support channels (email, discord, etc)
-      </Paragraph>
+      <Heading>Performance Against Other Assets</Heading>
+      <Paragraph>performance against other save systems</Paragraph>
     </>
   )
 }
 
 export const page: DocPageMeta = {
-  label: 'Support',
-  order: 998,
+  label: 'Other Assets',
   section: 'overview',
-  Content: Content
+  order: 1,
+  Content: Content,
 }
