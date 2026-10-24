@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import { Button } from "../ui";
 import { cn } from "@/lib/utils";
 
-// Helper to remove the "_" prefix from any folder in the URL path
 function cleanPath(path: string) {
   return path
     .split('/')
@@ -14,12 +13,12 @@ function cleanPath(path: string) {
 
 function SidebarButton({ label, to, onClose, className }: { label: string, to: string, onClose?: () => void, className?: string }) {
   return (
-    <NavLink to={to} onClick={onClose} end>
+    <NavLink to={to} onClick={onClose} end className="block">
       {({ isActive }) => (
         <Button 
           variant="ghost" 
           className={cn(
-            "w-full justify-start transition-colors my-px",
+            "w-full justify-start transition-colors h-9 py-1.5", // Explicitly control height and vertical padding
             isActive ? "text-accent" : "text-text/60",
             className
           )}
@@ -46,13 +45,13 @@ export default function SidebarItem({ item, projectId, onClose }: { item: any, p
     const hasItems = item.items.length > 0;
 
     return (
-      <li>
+      <li className="list-none">
         <div className="relative flex items-center w-full group">
           <div className="flex-1 w-full">
             {item.indexPage ? (
               <SidebarButton 
                 label={item.label} 
-                to={`/${projectId}/${item.indexPage.path}`} // Point to the cleanly generated indexPage path
+                to={`/${projectId}/${item.indexPage.path}`}
                 onClose={() => {
                   setIsOpen(prev => !prev);
                   onClose?.();
@@ -67,7 +66,7 @@ export default function SidebarItem({ item, projectId, onClose }: { item: any, p
                 variant="ghost"
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
-                  "w-full justify-start transition-colors",
+                  "w-full justify-start transition-colors h-9 py-1.5", // Explicitly control height and vertical padding
                   "text-text/60 group-hover:bg-input group-hover:text-input-text",
                   hasItems ? "pr-8" : ""
                 )}
@@ -76,7 +75,7 @@ export default function SidebarItem({ item, projectId, onClose }: { item: any, p
               </Button>
             )}
           </div>
-          
+
           {hasItems && (
             <button 
               className="absolute right-1 flex h-7 w-7 cursor-pointer items-center justify-center rounded-sm bg-transparent text-text/60 group-hover:text-input-text transition-colors"
@@ -91,9 +90,9 @@ export default function SidebarItem({ item, projectId, onClose }: { item: any, p
             </button>
           )}
         </div>
-        
+
         {isOpen && hasItems && (
-          <ul className="ml-3 space-y-1 border-l border-border pl-2">
+          <ul className="ml-3 mt-1 space-y-1 border-l border-border pl-2">
             {item.items.map((subItem: any, idx: number) => (
               <SidebarItem key={idx} item={subItem} projectId={projectId} onClose={onClose} />
             ))}
