@@ -38,7 +38,7 @@ function Content({ project }: { project: ProjectMeta }) {
             </TableCell>
             <TableCell className="text-gray-400 italic">N/A</TableCell>
             <TableCell>
-              Forces a specific field or property to be saved, bypassing default access modifier restrictions like private or protected visibility.
+              Forces a specific field or property to be saved, bypassing default access modifier restrictions (including SerializationSettings) like private or protected visibility.
             </TableCell>
           </TableRow>
           <TableRow>
@@ -56,7 +56,7 @@ function Content({ project }: { project: ProjectMeta }) {
             </TableCell>
             <TableCell className="text-gray-400 italic">Default Member Name</TableCell>
             <TableCell>
-              Overrides the default member name in the save data, allowing you to refactor code variable names without invalidating existing player save files.
+              Overrides the default member name in the save data, allowing you to refactor code variable names without invalidating existing player save files. <br/>*You can add multiple to one variable if you have multiple previous keys.
             </TableCell>
           </TableRow>
         </TableBody>
