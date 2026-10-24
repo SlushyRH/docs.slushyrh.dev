@@ -18,7 +18,12 @@ function formatFolderName(folderName: string) {
 export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProps) {
   const projectPages = Object.entries(allPages)
     .filter(([_, pageData]) => pageData.projectId === projectId)
-    .map(([_, pageData]) => ({ path: pageData.path, ...pageData.data, isIndex: pageData.isIndex }));
+    .map(([_, pageData]) => ({ 
+      path: pageData.path, 
+      rawPath: pageData.rawPath,
+      ...pageData.data, 
+      isIndex: pageData.isIndex 
+    }));
 
   const tree: Record<string, any[]> = {};
   
@@ -26,27 +31,28 @@ export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProp
   sections.forEach(section => {
     tree[section.id] = [];
   });
-  tree['root'] = []; 
+  tree['root'] = [];
 
   projectPages.forEach(page => {
-    const pathParts = page.path.split('/'); 
-    const isRootPage = pathParts.length === 1;
+    const rawPathParts = (page.rawPath || page.path).split('/'); 
+    const rawFolderPathParts = page.isIndex ? rawPathParts : rawPathParts.slice(0, -1);
+    
+    const visibleFolderPathParts = rawFolderPathParts.filter(part => !part.startsWith('_'));
     
     const requestedSection = page.section || 'root';
     const sectionId = tree[requestedSection] ? requestedSection : 'root';
     
+    const isRootPage = visibleFolderPathParts.length === 0;
+    
     if (isRootPage && !page.isIndex) {
       tree[sectionId].push({ type: 'page', ...page });
     } else {
-      const folderPathParts = page.isIndex ? pathParts : pathParts.slice(0, -1);
-      
       let currentLevel = tree[sectionId];
       let currentPath = '';
       let folderNode = null;
       
-      // Build nested folder structure
-      for (let i = 0; i < folderPathParts.length; i++) {
-        const part = folderPathParts[i];
+      for (let i = 0; i < visibleFolderPathParts.length; i++) {
+        const part = visibleFolderPathParts[i];
         currentPath = currentPath ? `${currentPath}/${part}` : part;
         
         let existing = currentLevel.find(n => n.type === 'folder' && n.path === currentPath);
@@ -75,7 +81,6 @@ export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProp
     }
   });
 
-  // Sort nodes recursively
   function sortTree(items: any[]) {
     items.sort((a, b) => {
       const orderA = a.type === 'folder' ? (a.indexPage?.order ?? 99) : (a.order ?? 99);

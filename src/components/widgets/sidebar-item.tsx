@@ -4,6 +4,14 @@ import { NavLink } from "react-router-dom";
 import { Button } from "../ui";
 import { cn } from "@/lib/utils";
 
+// Helper to remove the "_" prefix from any folder in the URL path
+function cleanPath(path: string) {
+  return path
+    .split('/')
+    .map(part => part.startsWith('_') ? part.slice(1) : part)
+    .join('/');
+}
+
 function SidebarButton({ label, to, onClose, className }: { label: string, to: string, onClose?: () => void, className?: string }) {
   return (
     <NavLink to={to} onClick={onClose} end>
@@ -11,7 +19,7 @@ function SidebarButton({ label, to, onClose, className }: { label: string, to: s
         <Button 
           variant="ghost" 
           className={cn(
-            "w-full justify-start transition-colors my-0.25",
+            "w-full justify-start transition-colors my-px",
             isActive ? "text-accent" : "text-text/60",
             className
           )}
@@ -28,7 +36,11 @@ export default function SidebarItem({ item, projectId, onClose }: { item: any, p
 
   if (item.type === 'page') {
     return (
-      <SidebarButton label={item.label} to={`/${projectId}/${item.path}`} onClose={onClose} />   
+      <SidebarButton 
+        label={item.label} 
+        to={`/${projectId}/${cleanPath(item.path)}`} 
+        onClose={onClose} 
+      />   
     );
   } else if (item.type === 'folder') {
     const hasItems = item.items.length > 0;
@@ -40,7 +52,7 @@ export default function SidebarItem({ item, projectId, onClose }: { item: any, p
             {item.indexPage ? (
               <SidebarButton 
                 label={item.label} 
-                to={`/${projectId}/${item.path}`} 
+                to={`/${projectId}/${item.indexPage.path}`} // Point to the cleanly generated indexPage path
                 onClose={() => {
                   setIsOpen(prev => !prev);
                   onClose?.();
