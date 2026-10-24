@@ -1,13 +1,12 @@
 import type { ProjectMeta } from "@/lib/types";
-import { FaItchIo, FaUnity } from "react-icons/fa";
 
 const projectMeta: ProjectMeta = {
-  title: 'Documentation',
-  redirectSlug: 'demo',
-  logoUrl: '/snowcap-icon.png',
-  links: [
-    { title: 'Asset Store', url: 'https://github.com/SlushyRH/', icon: FaUnity },
-    { title: 'Itch', url: 'https://github.com/SlushyRH/', icon: FaItchIo }
+  title: 'Modular Save System',
+  redirectSlug: 'intro',
+  sections: [
+    { id: 'overview', label: 'Overview' },
+    { id: 'guides', label: 'Guides' },
+    { id: 'modules', label: 'Modules' },
   ]
 }
 

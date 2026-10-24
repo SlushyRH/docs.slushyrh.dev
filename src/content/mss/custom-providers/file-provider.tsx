@@ -4,16 +4,15 @@ import type { DocPageMeta } from "@/lib/types";
 function Content() {
   return (
     <>
-      <Heading size='h1'>Introduction</Heading>
-      <Paragraph>
-        This is an introduction to my custom documentation site.
-      </Paragraph>
+      <Heading>Title</Heading>
+      <Paragraph>Paragraph</Paragraph>
     </>
   )
 }
 
 export const page: DocPageMeta = {
-  label: 'Intoduction',
+  label: 'File Provider',
+  section: 'guides',
   order: 0,
-  Content: Content
+  Content: Content,
 }

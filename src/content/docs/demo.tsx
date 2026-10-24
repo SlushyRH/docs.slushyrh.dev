@@ -248,7 +248,7 @@ function Content({ project }: { project: ProjectMeta }) {
 }
 
 export const page: DocPageMeta = {
-  label: 'Basic Demo',
+  label: 'Demo',
   order: 1,
   Content: Content
 }

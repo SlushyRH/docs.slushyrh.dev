@@ -26,7 +26,7 @@ export function DocViewerPage() {
   if (!docPath || docPath.trim() === '')
     return <Navigate to={`/${projectId}/${projectMeta.redirectSlug}`} replace />;
 
-  let targetPage = allPages[`${projectId}/${docPath}`];
+  const targetPage = allPages[`${projectId}/${docPath}`];
 
   if (!targetPage) {
     const childPages = Object.values(allPages).filter(
