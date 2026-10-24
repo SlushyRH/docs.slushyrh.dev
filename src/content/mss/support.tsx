@@ -6,7 +6,7 @@ function Content() {
     <>
       <Heading>Support</Heading>
       <Paragraph>
-        talk about differnet support channels
+        talk about differnet support channels (email, discord, etc)
       </Paragraph>
     </>
   )
