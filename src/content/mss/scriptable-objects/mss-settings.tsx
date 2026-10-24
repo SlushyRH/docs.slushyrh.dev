@@ -4,7 +4,7 @@ import type { DocPageMeta } from "@/lib/types";
 function Content() {
   return (
     <>
-      <Heading>Title</Heading>
+      <Heading>MSS Settings</Heading>
       <Paragraph>Paragraph</Paragraph>
     </>
   )
