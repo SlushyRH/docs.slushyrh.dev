@@ -10,17 +10,24 @@ export function OnThisPage({ docPath }: { docPath: string }) {
 
     const timer = setTimeout(() => {
       const elements = Array.from(document.querySelectorAll(
-        'article h1, article h2, article h3, article h4, article h5, article h6, article [data-size]'
+        'article h1, article h2, article h3, article h4, article h5, article h6, article [data-size], article [data-sidebar-title]'
       )).filter(elem => elem.getAttribute('data-hide-on-sidebar') !== 'true');
       
       const parsedHeadings = elements.map((elem, index) => {
-        const clone = elem.cloneNode(true) as HTMLElement;
-        const copyLink = clone.querySelector('a[aria-label="Copy"]');
-        if (copyLink) {
-          copyLink.remove();
+        const customTitle = elem.getAttribute('data-sidebar-title');
+        let cleanText = '';
+
+        if (customTitle) {
+          cleanText = customTitle.trim();
+        } else {
+          const clone = elem.cloneNode(true) as HTMLElement;
+          const copyLink = clone.querySelector('a[aria-label="Copy"]');
+          if (copyLink) {
+            copyLink.remove();
+          }
+          cleanText = clone.textContent?.trim() || '';
         }
         
-        const cleanText = clone.textContent?.trim() || '';
         if (!elem.id) {
           elem.id = cleanText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || `heading-${index}`;
         }
