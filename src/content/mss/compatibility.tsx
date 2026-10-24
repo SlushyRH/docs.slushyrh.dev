@@ -1,12 +1,14 @@
 import { Paragraph, Heading, Table, TableHeader, TableHead, TableBody, TableCell, TableRow, Link } from "@/components/ui";
-import type { DocPageMeta } from "@/lib/types";
+import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { LuSquareCheckBig, LuTriangleAlert } from "react-icons/lu";
 
-function Content() {
+function Content({ project }: { project: ProjectMeta }) {
   return (
     <>
       <Heading>Unity Versions</Heading>
-      <Paragraph>table with all unity versions and if they are supported or not</Paragraph>
+      <Paragraph>
+        The Modular Save System is designed specifically for modern Unity environments. Below is the current compatibility status across different Unity versions.
+      </Paragraph>
       <Table>
         <TableHeader>
           <TableRow>
@@ -40,7 +42,9 @@ function Content() {
       </Table>
 
       <Heading>Supported Platforms</Heading>
-      <Paragraph>table with all supported platforms (tested checkmark, untested with warning, not supported with x)</Paragraph>
+      <Paragraph>
+        MSS aims to provide seamless cross-platform functionality. The table below outlines the current testing and support status across various build targets and scripting backends.
+      </Paragraph>
       <Table>
         <TableHeader>
           <TableRow>
@@ -150,11 +154,11 @@ function Content() {
       </Paragraph>
 
       <Paragraph>
-        However, MSS is architected specifically to support these platforms. By utilizing the <Link to="#">IStorageProvider</Link> and <Link to="#">IFileStreamProvider</Link> interfaces, registered console developers can bypass the standard PC file system entirely and route save data directly through proprietary console SDKs.
+        However, MSS is architected specifically to support these platforms. By utilizing the <Link to={`/${project.id}/custom-providers/storage-provider`}>IStorageProvider</Link> and <Link to={`/${project.id}/custom-providers/file-stream-provider`}>IFileStreamProvider</Link> interfaces, registered console developers can bypass the standard PC file system entirely and route save data directly through proprietary console SDKs.
       </Paragraph>
 
       <Paragraph>
-        If you are a registered developer under NDA and need architectural advice on implementing these interfaces for a specific console, please reach out via our <Link to="#">support channels</Link>. We are fully available to guide you through the integration process as much as we can.
+        If you are a registered developer under NDA and need architectural advice on implementing these interfaces for a specific console, please reach out via our <Link to={`/${project.id}/support`}>support channels</Link>. We are fully available to guide you through the integration process as much as we can.
       </Paragraph>
     </>
   )
