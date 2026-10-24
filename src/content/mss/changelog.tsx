@@ -5,19 +5,6 @@ import { useState } from "react";
 
 const CHANGELOG_DATA = [
   {
-    version: "v1.1.0",
-    updates: [
-      "Added expandable changelog entries using the custom Expandable component.",
-      "Optimized documentation loading speeds."
-    ]
-  },
-  {
-    version: "v1.0.5",
-    updates: [
-      "Fixed an issue with the navigation menu overlapping on mobile devices."
-    ]
-  },
-  {
     version: "v1.0.0",
     updates: [
       "Initial public release."
