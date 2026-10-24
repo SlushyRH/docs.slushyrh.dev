@@ -1,0 +1,18 @@
+import { Paragraph, Heading } from "@/components/ui";
+import type { DocPageMeta } from "@/lib/types";
+
+function Content() {
+  return (
+    <>
+      <Heading>Title</Heading>
+      <Paragraph>write about mss reference manager</Paragraph>
+    </>
+  )
+}
+
+export const page: DocPageMeta = {
+  label: 'Referencing',
+  section: 'guides',
+  order: 0,
+  Content: Content,
+}

@@ -20,3 +20,4 @@ export * from "./link";
 export * from "./flex";
 export * from "./table";
 export * from "./expandable";
+export * from "./empty";

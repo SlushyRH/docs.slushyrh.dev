@@ -1,7 +1,8 @@
 import type { ComponentProps } from "@/lib/types";
 import { cn, componentStyles } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import type { ReactNode } from "react";
+import React, { type ReactNode } from "react";
+import { toast } from "sonner";
 
 const paragraphVariants = cva(
   "",
@@ -51,18 +52,59 @@ const headingVariants = cva(
   }
 );
 
-interface HeadingProps extends ComponentProps {
-  children: ReactNode;
+function generateId(node: ReactNode): string {
+  if (typeof node === "string") {
+    return node.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  }
+  if (Array.isArray(node)) {
+    return node.map(generateId).filter(Boolean).join("-");
+  }
+  if (React.isValidElement(node)) {
+    const props = node.props as { children?: ReactNode };
+    if (props.children) {
+      return generateId(props.children);
+    }
+  }
+  return "";
 }
 
-export function Heading({ children, size = "h1", className, noMargin }: HeadingProps & VariantProps<typeof headingVariants>) {
+interface HeadingProps extends ComponentProps {
+  children: ReactNode;
+  hideOnPageSidebar?: boolean;
+  id?: string;
+}
+
+export function Heading({ children, size = "h1", className, noMargin, hideOnPageSidebar, id }: HeadingProps & VariantProps<typeof headingVariants>) {
   const Tag = size || "h1";
+  const headingId = id || generateId(children);
+
+  const handleCopy = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    
+    const url = new URL(window.location.href);
+    url.hash = headingId;
+    
+    navigator.clipboard.writeText(url.toString());
+    toast.success("Link copied to clipboard!");
+  };
 
   return (
     <Tag 
+      id={headingId}
       data-size={size} 
-      className={cn(headingVariants({ size }), componentStyles({ noMargin, className }))}
+      data-hide-on-sidebar={hideOnPageSidebar ? "true" : undefined}
+      className={cn("group relative", headingVariants({ size }), componentStyles({ noMargin, className }))}
     >
+      {headingId && (
+        <a 
+          href={`#${headingId}`}
+          onClick={handleCopy}
+          className="absolute -left-8 w-8 text-right pr-2 opacity-0 transition-opacity group-hover:opacity-100 text-text/50 hover:text-text no-underline cursor-pointer"
+          aria-label="Copy"
+        >
+          #
+        </a>
+      )}
       {children}
     </Tag>
   );

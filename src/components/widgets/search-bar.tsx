@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import type { ProjectMeta } from "@/lib/types";
-import { allPages, folders } from "@/content/_index";
+import { allPages } from "@/content/_index";
 import { Button, Card } from "../ui";
 import {
   LuSearch,
@@ -27,6 +27,10 @@ interface SearchResultItem {
   plainText?: string;
 }
 
+function formatFolderName(folderName: string) {
+  return folderName.charAt(0).toUpperCase() + folderName.slice(1).replace(/-/g, ' ');
+}
+
 export function SearchBar({ project }: SearchBarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -35,10 +39,10 @@ export function SearchBar({ project }: SearchBarProps) {
   const navigate = useNavigate();
 
   const projectPages = useMemo(() => {
-    return Object.entries(allPages)
-      .filter(([_, page]) => page.projectId === project.slug)
-      .map(([path, pageData]) => {
-        const pathParts = path.split("/");
+    return Object.values(allPages)
+      .filter((page) => page.projectId === project.id)
+      .map((pageData) => {
+        const pathParts = pageData.path.split("/");
         const breadcrumbs: string[] = [];
 
         if (pageData.data.section) {
@@ -48,23 +52,30 @@ export function SearchBar({ project }: SearchBarProps) {
           if (sectionMeta) breadcrumbs.push(sectionMeta.label);
         }
 
-        if (pathParts.length > 1) {
-          const folderPath = pathParts.slice(0, -1).join("/");
-          const folderMeta = folders[folderPath];
-          if (folderMeta?.label) {
-            breadcrumbs.push(folderMeta.label);
+        // Parent directories for breadcrumbs
+        const folderParts = pageData.isIndex ? pathParts.slice(0, -1) : pathParts.slice(0, -1);
+        
+        folderParts.forEach((folderName, index) => {
+          const currentFolderPath = folderParts.slice(0, index + 1).join("/");
+          const indexPageKey = `${project.id}/${currentFolderPath}`;
+          const indexPage = allPages[indexPageKey];
+          
+          if (indexPage && indexPage.isIndex && indexPage.data.label) {
+            breadcrumbs.push(indexPage.data.label);
+          } else {
+            breadcrumbs.push(formatFolderName(folderName));
           }
-        }
+        });
 
         return {
-          path,
+          path: pageData.path,
           label: pageData.data.label,
           breadcrumbs,
-          description: (pageData.data as any).description || "",
-          plainText: (pageData.data as any).plainText || "",
+          description: pageData.data.description || "",
+          plainText: pageData.data.plainText || "",
         } as SearchResultItem;
       });
-  }, [project.slug, project.sections]);
+  }, [project.id, project.sections]);
 
   const results = useMemo(() => {
     const trimmed = query.trim().toLowerCase();
@@ -123,21 +134,19 @@ export function SearchBar({ project }: SearchBarProps) {
 
   const navigateToResult = (path: string) => {
     setIsOpen(false);
-    navigate(`/${project.slug}/${path}`);
+    navigate(`/${project.id}/${path}`);
   };
 
   return (
     <>
-      <>
-        <Button
-          variant="mobile"
-          size="icon"
-          onClick={() => setIsOpen(true)}
-          aria-label="Open Search"
-        >
-          <LuSearch size={20} />
-        </Button>
-      </>
+      <Button
+        variant="mobile"
+        size="icon"
+        onClick={() => setIsOpen(true)}
+        aria-label="Open Search"
+      >
+        <LuSearch size={20} />
+      </Button>
 
       {isOpen &&
         createPortal(

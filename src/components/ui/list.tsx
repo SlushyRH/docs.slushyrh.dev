@@ -1,10 +1,13 @@
-import React, { createContext, useContext, type ReactNode } from "react";
+"use client"; // <-- Add this if you are using Next.js App Router
+
+import React, { createContext, useContext, Children, isValidElement, type ReactNode } from "react";
 import { cn, componentStyles } from "@/lib/utils";
 import type { ComponentProps } from "@/lib/types";
 
 const ListContext = createContext<number>(0);
 
-interface ListProps extends ComponentProps, React.HTMLAttributes<HTMLUListElement | HTMLOListElement> {
+// We use Omit here just in case native HTML 'type' attribute conflicts with your custom 'type'
+interface ListProps extends ComponentProps, Omit<React.HTMLAttributes<HTMLUListElement | HTMLOListElement>, "type"> {
   children: ReactNode;
   type: "ordered" | "unordered";
 }
@@ -20,7 +23,6 @@ export function List({ children, type, className, noMargin, ...props }: ListProp
     listStyle = depth === 0 ? "list-disc" : depth === 1 ? "list-[circle]" : "list-[square]";
   }
 
-  // If noMargin is explicitly passed, respect it. Otherwise, default to true for nested lists.
   const isNested = depth > 0;
   const appliedNoMargin = noMargin !== undefined ? noMargin : isNested;
 
@@ -34,24 +36,29 @@ export function List({ children, type, className, noMargin, ...props }: ListProp
         )}
         {...props}
       >
-        {children}
+        {/* Children.toArray automatically flattens React Fragments (<>...</>) */}
+        {Children.toArray(children).map((child, index) => {
+          // If the child is already an explicitly passed native <li> element, merge the classes
+          if (isValidElement(child) && child.type === "li") {
+            return React.cloneElement(child as React.ReactElement<any>, {
+              className: cn(
+                "mb-1 text-text text-sm leading-relaxed marker:text-text/50",
+                (child.props as any).className
+              ),
+            });
+          }
+
+          // Otherwise, automatically wrap the element (like your <Link> or <span>) in an <li>
+          return (
+            <li 
+              key={isValidElement(child) && child.key ? child.key : index} 
+              className="mb-1 text-text text-sm leading-relaxed marker:text-text/50"
+            >
+              {child}
+            </li>
+          );
+        })}
       </Tag>
     </ListContext.Provider>
-  );
-}
-
-interface ListItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
-  children: ReactNode;
-  className?: string;
-}
-
-export function ListItem({ children, className, ...props }: ListItemProps) {
-  return (
-    <li 
-      className={cn("mb-1 text-text text-sm leading-relaxed marker:text-text/50", className)} 
-      {...props}
-    >
-      {children}
-    </li>
   );
 }

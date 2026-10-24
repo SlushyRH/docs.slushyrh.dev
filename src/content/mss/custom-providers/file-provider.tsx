@@ -1,7 +1,6 @@
 import { Paragraph, Heading } from "@/components/ui";
 import type { DocPageMeta } from "@/lib/types";
 
-// function Content({ project }: { project: ProjectMeta }) {
 function Content() {
   return (
     <>
@@ -12,7 +11,8 @@ function Content() {
 }
 
 export const page: DocPageMeta = {
-  slug: 'page',
-  label: 'Page',
-  Content: Content
+  label: 'File Provider',
+  section: 'guides',
+  order: 0,
+  Content: Content,
 }

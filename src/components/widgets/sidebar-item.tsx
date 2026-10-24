@@ -4,11 +4,25 @@ import { NavLink } from "react-router-dom";
 import { Button } from "../ui";
 import { cn } from "@/lib/utils";
 
+function cleanPath(path: string) {
+  return path
+    .split('/')
+    .map(part => part.startsWith('_') ? part.slice(1) : part)
+    .join('/');
+}
+
 function SidebarButton({ label, to, onClose, className }: { label: string, to: string, onClose?: () => void, className?: string }) {
   return (
-    <NavLink to={to} onClick={onClose}>
+    <NavLink to={to} onClick={onClose} end className="block">
       {({ isActive }) => (
-        <Button variant="ghost" className={cn(`w-full justify-start text-text/60 hover:text-text ${isActive ? 'text-accent' : undefined}`, className)}>
+        <Button 
+          variant="ghost" 
+          className={cn(
+            "w-full justify-start transition-colors h-9 py-1.5", // Explicitly control height and vertical padding
+            isActive ? "text-accent" : "text-text/60",
+            className
+          )}
+        >
           {label}
         </Button>
       )}
@@ -17,34 +31,70 @@ function SidebarButton({ label, to, onClose, className }: { label: string, to: s
 }
 
 export default function SidebarItem({ item, projectId, onClose }: { item: any, projectId: string, onClose?: () => void }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   if (item.type === 'page') {
     return (
-      <SidebarButton label={item.label} to={`/${projectId}/${item.path}`} onClose={onClose} />   
+      <SidebarButton 
+        label={item.label} 
+        to={`/${projectId}/${cleanPath(item.path)}`} 
+        onClose={onClose} 
+      />   
     );
   } else if (item.type === 'folder') {
-    const isCollapsable = item.meta?.collapsable ?? false;
+    const hasItems = item.items.length > 0;
 
     return (
-      <li className="mt-2">
-        <Button
-          variant="ghost"
-          onClick={() => isCollapsable && setIsOpen(!isOpen)}
-          className="w-full justify-between text-text/60 hover:text-text"
-        >
-          <span>{item.meta?.label || item.path}</span>
-          {isCollapsable && (
-            isOpen ? <LuChevronDown className="w-4 h-4" /> : <LuChevronRight className="w-4 h-4" />
+      <li className="list-none">
+        <div className="relative flex items-center w-full group">
+          <div className="flex-1 w-full">
+            {item.indexPage ? (
+              <SidebarButton 
+                label={item.label} 
+                to={`/${projectId}/${item.indexPage.path}`}
+                onClose={() => {
+                  setIsOpen(prev => !prev);
+                  onClose?.();
+                }}
+                className={cn(
+                  hasItems ? "pr-8" : "",
+                  "group-hover:bg-input group-hover:text-input-text"
+                )}
+              />
+            ) : (
+              <Button
+                variant="ghost"
+                onClick={() => setIsOpen(!isOpen)}
+                className={cn(
+                  "w-full justify-start transition-colors h-9 py-1.5", // Explicitly control height and vertical padding
+                  "text-text/60 group-hover:bg-input group-hover:text-input-text",
+                  hasItems ? "pr-8" : ""
+                )}
+              >
+                {item.label}
+              </Button>
+            )}
+          </div>
+
+          {hasItems && (
+            <button 
+              className="absolute right-1 flex h-7 w-7 cursor-pointer items-center justify-center rounded-sm bg-transparent text-text/60 group-hover:text-input-text transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+              }}
+              aria-label="Toggle folder"
+            >
+              {isOpen ? <LuChevronDown className="w-4 h-4" /> : <LuChevronRight className="w-4 h-4" />}
+            </button>
           )}
-        </Button>
-        
-        {isOpen && (
-          <ul className="ml-3 mt-2 space-y-1 border-l border-border">
-            {item.pages.map((page: any, idx: number) => (
-              <li key={idx}>
-                <SidebarButton label={page.label} to={`/${projectId}/${page.path}`} onClose={onClose} className="rounded-l-none" />
-              </li>
+        </div>
+
+        {isOpen && hasItems && (
+          <ul className="ml-3 mt-1 space-y-1 border-l border-border pl-2">
+            {item.items.map((subItem: any, idx: number) => (
+              <SidebarItem key={idx} item={subItem} projectId={projectId} onClose={onClose} />
             ))}
           </ul>
         )}

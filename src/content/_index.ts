@@ -1,4 +1,4 @@
-import type { ProjectMeta, DocPageMeta, DocFolderMeta } from "@/lib/types";
+import type { ProjectMeta, DocPageMeta } from "@/lib/types";
 
 const metaModules = import.meta.glob<{ default: any }>(
   ["./**/_index.ts", "!./_index.ts"],
@@ -11,39 +11,53 @@ const pageModules = import.meta.glob<{ page: DocPageMeta }>(
 );
 
 export const projects: Record<string, ProjectMeta> = {};
-export const folders: Record<string, DocFolderMeta> = {};
-export const allPages: Record<string, { path: string; data: DocPageMeta; projectId: string }> = {};
+export const allPages: Record<string, { path: string; rawPath: string; data: DocPageMeta; projectId: string; isIndex: boolean }> = {};
 
-// process meta data
 for (const filePath in metaModules) {
   const mod = metaModules[filePath];
   if (!mod.default) continue;
 
   const pathParts = filePath.split('/'); 
+  const projectId = pathParts[1];
 
-  // if length == 3, then its a project meta from root, otherwise its a folder meta
   if (pathParts.length === 3) {
-    projects[mod.default.slug] = mod.default as ProjectMeta;
-  } else if (pathParts.length > 3) {
-    const folderPath = pathParts.slice(2, -1).join('/'); 
-    folders[folderPath] = mod.default as DocFolderMeta;
+    projects[projectId] = { ...mod.default, id: projectId } as ProjectMeta;
   }
 }
 
 // process pages
 for (const filePath in pageModules) {
   const mod = pageModules[filePath];
-  if (!mod.page || !mod.page.slug) continue;
+  if (!mod.page) continue;
 
   const pathParts = filePath.split('/');
   const projectId = pathParts[1]; 
   
   const folderDirectories = pathParts.slice(2, -1);
-  const fullPath = [...folderDirectories, mod.page.slug].join('/');
+  
+  // Clean URL directories (strips the '_' so '_admin' becomes 'admin')
+  const urlDirectories = folderDirectories.map(f => f.startsWith('_') ? f.slice(1) : f);
+  
+  const pageSlug = pathParts[pathParts.length - 1].replace(/\.tsx$/, '');
+  const isIndex = pageSlug === 'index';
+  
+  // The Clean URL for routing
+  const relativeUrlPath = isIndex 
+    ? urlDirectories.join('/')
+    : [...urlDirectories, pageSlug].filter(Boolean).join('/');
+    
+  // The Raw Path so the sidebar knows which folders had an '_'
+  const rawRelativePath = isIndex 
+    ? folderDirectories.join('/')
+    : [...folderDirectories, pageSlug].filter(Boolean).join('/');
+    
+  const uniqueKey = `${projectId}/${relativeUrlPath}`;
 
-  allPages[fullPath] = {
-    path: fullPath,
+  allPages[uniqueKey] = {
+    path: relativeUrlPath,    // This powers the clean slug: /id/folder/page
+    rawPath: rawRelativePath, // This powers the sidebar hiding logic
     data: mod.page,
     projectId: projectId,
+    isIndex
   };
 }
