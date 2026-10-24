@@ -11,11 +11,18 @@ export function OnThisPage({ docPath }: { docPath: string }) {
     const timer = setTimeout(() => {
       const elements = Array.from(document.querySelectorAll(
         'article h1, article h2, article h3, article h4, article h5, article h6, article [data-size]'
-      ));
+      )).filter(elem => elem.getAttribute('data-hide-on-sidebar') !== 'true');
       
       const parsedHeadings = elements.map((elem, index) => {
+        const clone = elem.cloneNode(true) as HTMLElement;
+        const copyLink = clone.querySelector('a[aria-label="Copy"]');
+        if (copyLink) {
+          copyLink.remove();
+        }
+        
+        const cleanText = clone.textContent?.trim() || '';
         if (!elem.id) {
-          elem.id = elem.textContent?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `heading-${index}`;
+          elem.id = cleanText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || `heading-${index}`;
         }
         
         const dataSize = elem.getAttribute('data-size');
@@ -31,7 +38,7 @@ export function OnThisPage({ docPath }: { docPath: string }) {
 
         return {
           id: elem.id,
-          text: elem.textContent || '',
+          text: cleanText,
           level: Math.max(1, Math.min(level, 6))
         };
       });
