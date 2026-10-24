@@ -1,5 +1,4 @@
 import { Paragraph, Heading, Space, CodeBlock, Button, Link, Quote, Grid, Card, ScrollArea, Tabs, TabItem, Stepper, Step, Image, Video, Alert, Separator, Code, Flex, Checkbox, Table, TableHeader, TableRow, TableHead, TableCell, TableBody, Expandable } from "@/components/ui";
-import { List, ListItem } from "@/components/ui/list";
 import type { DocPageMeta, ProjectMeta } from "@/lib/types";
 import { FaUser } from "react-icons/fa";
 
@@ -48,8 +47,8 @@ function Content({ project }: { project: ProjectMeta }) {
       <Heading>Paragraphs</Heading>
       <Paragraph>
         This is a paragraph, it's pretty basic. You can write <b>bold</b>, <i>italics</i>, and anything else since it's normal HTML.
-        You can also include links, either to other pages <Link href={`/${project}/intro`}>another page</Link>, or
-        an <Link href="https://slushyrh.dev" sameTab={false}>external page</Link>.
+        You can also include links, either to other pages <Link to={`/${project}/intro`}>another page</Link>, or
+        an <Link to="https://slushyrh.dev" sameTab={false}>external page</Link>.
       </Paragraph>
 
       <Heading>Code Block</Heading>
@@ -197,19 +196,6 @@ function Content({ project }: { project: ProjectMeta }) {
       </Grid>
 
       <Heading>Lists</Heading>
-      <List type="ordered">
-        <ListItem>First Item</ListItem>
-        <ListItem>Second Item</ListItem>
-        <List type="ordered">
-          <ListItem>Second A Item</ListItem>
-          <List type="unordered">
-            <ListItem>Second I Item</ListItem>
-            <ListItem>Second II Item</ListItem>
-          </List>
-          <ListItem>Second B Item</ListItem>
-        </List>
-        <ListItem>Third Item</ListItem>
-      </List>
 
       <Heading>Tables</Heading>
       <ScrollArea>
