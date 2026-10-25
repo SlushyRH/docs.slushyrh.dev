@@ -4,15 +4,15 @@ import type { DocPageMeta } from "@/lib/types";
 function Content() {
   return (
     <>
-      <Heading>Scriptable Objects</Heading>
-      <Paragraph>Paragraph</Paragraph>
+      <Heading>Title</Heading>
+      <Paragraph>talk about how to use ISnapshots</Paragraph>
     </>
   )
 }
 
 export const page: DocPageMeta = {
-  label: 'Scriptable Objects',
-  section: 'modules',
+  label: 'Snapshots',
+  section: 'guides',
   order: 0,
   Content: Content,
 }

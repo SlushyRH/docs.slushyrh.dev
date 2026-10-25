@@ -36,13 +36,11 @@ export function List({ children, type, className, noMargin, ...props }: ListProp
         )}
         {...props}
       >
-        {/* Children.toArray automatically flattens React Fragments (<>...</>) */}
         {Children.toArray(children).map((child, index) => {
-          // If the child is already an explicitly passed native <li> element, merge the classes
           if (isValidElement(child) && child.type === "li") {
             return React.cloneElement(child as React.ReactElement<any>, {
               className: cn(
-                "mb-1 text-text text-sm leading-relaxed marker:text-text/50",
+                "mb-1 text-text text leading-relaxed marker:text-text/50",
                 (child.props as any).className
               ),
             });
