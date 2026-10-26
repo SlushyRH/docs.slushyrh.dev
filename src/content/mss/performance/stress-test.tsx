@@ -1,7 +1,8 @@
-import { Paragraph, Heading, Table, TableHeader, TableHead, TableBody, TableCell, TableRow, Code } from "@/components/ui";
-import type { DocPageMeta, ProjectMeta } from "@/lib/types";
+import { Paragraph, Heading, Table, TableHeader, TableHead, TableBody, TableCell, TableRow, Code, Alert } from "@/components/ui";
+import { List } from "@/components/ui/list";
+import type { DocPageMeta } from "@/lib/types";
 
-function Content({ project }: { project: ProjectMeta }) {
+function Content() {
   return (
     <>
       <Heading>Stress Test</Heading>
@@ -16,18 +17,18 @@ function Content({ project }: { project: ProjectMeta }) {
       <Paragraph>
         These benchmarks were recorded in a Standalone Windows 64 build, yielding significantly faster execution times than the standard Editor PlayMode.
       </Paragraph>
-      <ul className="mb-6 list-inside list-disc text-slate-300">
-        <li><strong>CPU:</strong> Intel Core i5-9600K @ 3.70GHz</li>
-        <li><strong>RAM:</strong> 32 GB</li>
-        <li><strong>OS:</strong> Windows 11</li>
-        <li><strong>Context:</strong> Standalone Windows 64</li>
-      </ul>
+      <List type="unordered">
+        <span><strong>CPU:</strong> Intel Core i5-9600K @ 3.70GHz</span>
+        <span><strong>RAM:</strong> 32 GB</span>
+        <span><strong>OS:</strong> Windows 11</span>
+        <span><strong>Context:</strong> Standalone Windows 64</span>
+      </List>
 
       <Heading size="h2">Performance Results</Heading>
       <Paragraph>
-        The table below details the performance impact of every serialization, compression, and encryption combination when processing 28,021 components. Memory allocation remains highly consistent for each serializer across all permutations, proving the architecture avoids string-building allocations during compression and encryption passes.
+        The table below details the performance impact of every included serialization, compression, and encryption combination when processing 28,021 components.
       </Paragraph>
-      <Table noMargin>
+      <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Configuration</TableHead>
@@ -38,34 +39,6 @@ function Content({ project }: { project: ProjectMeta }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell><strong>MSS Serializer</strong></TableCell>
-            <TableCell>3095.36</TableCell>
-            <TableCell>11014.81</TableCell>
-            <TableCell>4.65</TableCell>
-            <TableCell>8.11</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>MSS + GZip</TableCell>
-            <TableCell>3160.07</TableCell>
-            <TableCell>10860.29</TableCell>
-            <TableCell>4.65</TableCell>
-            <TableCell>8.11</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>MSS + AES</TableCell>
-            <TableCell>3296.92</TableCell>
-            <TableCell>11131.33</TableCell>
-            <TableCell>4.65</TableCell>
-            <TableCell>8.11</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>MSS + GZip + AES</TableCell>
-            <TableCell>3194.67</TableCell>
-            <TableCell>10907.50</TableCell>
-            <TableCell>4.65</TableCell>
-            <TableCell>8.11</TableCell>
-          </TableRow>
           <TableRow>
             <TableCell><strong>JSON Serializer</strong></TableCell>
             <TableCell>2932.87</TableCell>
@@ -93,6 +66,34 @@ function Content({ project }: { project: ProjectMeta }) {
             <TableCell>1837.35</TableCell>
             <TableCell>4.06</TableCell>
             <TableCell>2.80</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><strong>MSS Serializer</strong></TableCell>
+            <TableCell>3095.36</TableCell>
+            <TableCell>11014.81</TableCell>
+            <TableCell>4.65</TableCell>
+            <TableCell>8.11</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>MSS + GZip</TableCell>
+            <TableCell>3160.07</TableCell>
+            <TableCell>10860.29</TableCell>
+            <TableCell>4.65</TableCell>
+            <TableCell>8.11</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>MSS + AES</TableCell>
+            <TableCell>3296.92</TableCell>
+            <TableCell>11131.33</TableCell>
+            <TableCell>4.65</TableCell>
+            <TableCell>8.11</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>MSS + GZip + AES</TableCell>
+            <TableCell>3194.67</TableCell>
+            <TableCell>10907.50</TableCell>
+            <TableCell>4.65</TableCell>
+            <TableCell>8.11</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><strong>XML Serializer</strong></TableCell>
@@ -124,6 +125,10 @@ function Content({ project }: { project: ProjectMeta }) {
           </TableRow>
         </TableBody>
       </Table>
+
+      <Alert type="info" noMargin>
+        <strong>Note:</strong> These benchmarks measure raw synchronous execution throughput. In production, MSS utilizes thread-safe asynchronous I/O to process these heavy serialization workloads in the background without blocking the main Unity thread.
+      </Alert>
     </>
   )
 }
