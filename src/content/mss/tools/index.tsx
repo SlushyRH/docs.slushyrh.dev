@@ -1,11 +1,14 @@
-import { Paragraph, Heading } from "@/components/ui";
+import { Paragraph, Heading, Image, Grid } from "@/components/ui";
 import type { DocPageMeta } from "@/lib/types";
 
 function Content() {
   return (
     <>
       <Heading>Custom Tools</Heading>
-      <Paragraph>Paragraph</Paragraph>
+      <Grid> 
+        <Paragraph>Paragraph</Paragraph>
+        <Image src="/resources/tools/tools-window.png" />
+      </Grid>
     </>
   )
 }
