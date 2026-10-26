@@ -12,3 +12,7 @@ export function componentStyles({ noMargin, className }: ComponentProps) {
     className
   );
 }
+
+export function capitalizeWords(val: string) {
+  return String(val).replace(/\b\w/g, (char) => char.toUpperCase());
+}

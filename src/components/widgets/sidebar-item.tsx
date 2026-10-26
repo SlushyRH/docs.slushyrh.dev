@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LuChevronDown, LuChevronRight } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
 import { Button } from "../ui";
-import { cn } from "@/lib/utils";
+import { capitalizeWords, cn } from "@/lib/utils";
 
 function cleanPath(path: string) {
   return path
@@ -18,7 +18,7 @@ function SidebarButton({ label, to, onClose, className }: { label: string, to: s
         <Button 
           variant="ghost" 
           className={cn(
-            "w-full justify-start transition-colors h-9 py-1.5", // Explicitly control height and vertical padding
+            "w-full justify-start transition-colors h-9 py-1.5",
             isActive ? "text-accent" : "text-text/60",
             className
           )}
@@ -66,12 +66,12 @@ export default function SidebarItem({ item, projectId, onClose }: { item: any, p
                 variant="ghost"
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
-                  "w-full justify-start transition-colors h-9 py-1.5", // Explicitly control height and vertical padding
+                  "w-full justify-start transition-colors h-9 py-1.5",
                   "text-text/60 group-hover:bg-input group-hover:text-input-text",
                   hasItems ? "pr-8" : ""
                 )}
               >
-                {item.label}
+                {capitalizeWords(item.label)}
               </Button>
             )}
           </div>
