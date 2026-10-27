@@ -1,17 +1,11 @@
-import { Paragraph, Heading, Table, TableHeader, TableHead, TableBody, TableCell, TableRow, Code, Alert } from "@/components/ui";
+import { Paragraph, Heading, Table, TableHeader, TableHead, TableBody, TableCell, TableRow, Alert } from "@/components/ui";
 import { List } from "@/components/ui/list";
 import type { DocPageMeta } from "@/lib/types";
 
 function Content() {
   return (
     <>
-      <Heading>Stress Test (Async)</Heading>
-      <Paragraph>
-        To ensure the Modular Save System (MSS) scales efficiently for large projects, we enforce a rigorous stress test profiling the execution time and Garbage Collection (GC) allocations. The benchmark generates a physical Unity scene containing 10,000 deeply nested and wide-loaded GameObjects, equipped with custom data structures and arrays.
-      </Paragraph>
-      <Paragraph>
-        The <Code>MssReferenceManager</Code> crawls this hierarchy, identifying and mapping 28,021 unique component references before executing the serialization pipeline. 
-      </Paragraph>
+      <Heading>Stress Test (Windows)</Heading>
 
       <Heading size="h2">Test Environment</Heading>
       <Paragraph>
@@ -36,6 +30,7 @@ function Content() {
             <TableHead>Load Time (ms)</TableHead>
             <TableHead>Save GC (MB)</TableHead>
             <TableHead>Load GC (MB)</TableHead>
+            <TableHead>File Size (MB)</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -45,6 +40,7 @@ function Content() {
             <TableCell>1871.68</TableCell>
             <TableCell>4.06</TableCell>
             <TableCell>2.80</TableCell>
+            <TableCell>5.53</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>JSON + GZip</TableCell>
@@ -52,6 +48,7 @@ function Content() {
             <TableCell>1893.41</TableCell>
             <TableCell>4.06</TableCell>
             <TableCell>2.80</TableCell>
+            <TableCell>0.92</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>JSON + AES</TableCell>
@@ -59,6 +56,7 @@ function Content() {
             <TableCell>1944.30</TableCell>
             <TableCell>4.06</TableCell>
             <TableCell>2.80</TableCell>
+            <TableCell>5.53</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>JSON + GZip + AES</TableCell>
@@ -66,6 +64,7 @@ function Content() {
             <TableCell>1837.35</TableCell>
             <TableCell>4.06</TableCell>
             <TableCell>2.80</TableCell>
+            <TableCell>0.92</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><strong>MSS Serializer</strong></TableCell>
@@ -73,6 +72,7 @@ function Content() {
             <TableCell>11014.81</TableCell>
             <TableCell>4.65</TableCell>
             <TableCell>8.11</TableCell>
+            <TableCell>8.38</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>MSS + GZip</TableCell>
@@ -80,6 +80,7 @@ function Content() {
             <TableCell>10860.29</TableCell>
             <TableCell>4.65</TableCell>
             <TableCell>8.11</TableCell>
+            <TableCell>0.94</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>MSS + AES</TableCell>
@@ -87,6 +88,7 @@ function Content() {
             <TableCell>11131.33</TableCell>
             <TableCell>4.65</TableCell>
             <TableCell>8.11</TableCell>
+            <TableCell>8.38</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>MSS + GZip + AES</TableCell>
@@ -94,6 +96,7 @@ function Content() {
             <TableCell>10907.50</TableCell>
             <TableCell>4.65</TableCell>
             <TableCell>8.11</TableCell>
+            <TableCell>0.94</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><strong>XML Serializer</strong></TableCell>
@@ -101,6 +104,7 @@ function Content() {
             <TableCell>11391.31</TableCell>
             <TableCell>4.06</TableCell>
             <TableCell>9.80</TableCell>
+            <TableCell>13.55</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>XML + GZip</TableCell>
@@ -108,6 +112,7 @@ function Content() {
             <TableCell>11460.43</TableCell>
             <TableCell>4.06</TableCell>
             <TableCell>9.80</TableCell>
+            <TableCell>1.06</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>XML + AES</TableCell>
@@ -115,6 +120,7 @@ function Content() {
             <TableCell>11699.04</TableCell>
             <TableCell>4.06</TableCell>
             <TableCell>9.80</TableCell>
+            <TableCell>13.55</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>XML + GZip + AES</TableCell>
@@ -122,6 +128,7 @@ function Content() {
             <TableCell>11471.11</TableCell>
             <TableCell>4.06</TableCell>
             <TableCell>9.80</TableCell>
+            <TableCell>1.06</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -134,8 +141,8 @@ function Content() {
 }
 
 export const page: DocPageMeta = {
-  label: 'Stress Test (Async)',
+  label: 'Windows',
   section: 'overview',
-  order: 1,
+  order: 0,
   Content: Content,
 }
