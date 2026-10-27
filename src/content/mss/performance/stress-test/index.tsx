@@ -5,7 +5,7 @@ import type { DocPageMeta } from "@/lib/types";
 function Content() {
   return (
     <>
-      <Heading>Stress Test</Heading>
+      <Heading>Stress Test (Sync)</Heading>
       <Paragraph>
         To ensure the Modular Save System (MSS) scales efficiently for large projects, we enforce a rigorous stress test profiling the execution time and Garbage Collection (GC) allocations. The benchmark generates a physical Unity scene containing 10,000 deeply nested and wide-loaded GameObjects, equipped with custom data structures and arrays.
       </Paragraph>
@@ -134,8 +134,8 @@ function Content() {
 }
 
 export const page: DocPageMeta = {
-  label: 'Stress Test',
+  label: 'Stress Test (Sync)',
   section: 'overview',
-  order: 1,
+  order: 0,
   Content: Content,
 }
