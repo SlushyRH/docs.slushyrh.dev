@@ -18,117 +18,230 @@ function Content() {
         <span><strong>Context:</strong> Standalone Windows 64</span>
       </List>
 
-      <Heading size="h2">Performance Results</Heading>
       <Paragraph>
-        The table below details the performance impact of every included serialization, compression, and encryption combination when processing 28,021 components.
+        The tables below detail the performance impact of every included serialization, compression, and encryption combination when processing 10,000 components.
       </Paragraph>
+
+      <Heading size="h2">Performance Results (Mono)</Heading>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Configuration</TableHead>
             <TableHead>Save Time (ms)</TableHead>
             <TableHead>Load Time (ms)</TableHead>
-            <TableHead>Save GC (MB)</TableHead>
-            <TableHead>Load GC (MB)</TableHead>
-            <TableHead>File Size (MB)</TableHead>
+            <TableHead>Save GC (KB)</TableHead>
+            <TableHead>Load GC (KB)</TableHead>
+            <TableHead>File Size (KB)</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
             <TableCell><strong>JSON Serializer</strong></TableCell>
-            <TableCell>2932.87</TableCell>
-            <TableCell>1871.68</TableCell>
-            <TableCell>4.06</TableCell>
-            <TableCell>2.80</TableCell>
-            <TableCell>5.53</TableCell>
+            <TableCell>1167.82</TableCell>
+            <TableCell>710.00</TableCell>
+            <TableCell>1521.93</TableCell>
+            <TableCell>1027.05</TableCell>
+            <TableCell>2021.38</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>JSON + GZip</TableCell>
-            <TableCell>3214.33</TableCell>
-            <TableCell>1893.41</TableCell>
-            <TableCell>4.06</TableCell>
-            <TableCell>2.80</TableCell>
-            <TableCell>0.92</TableCell>
+            <TableCell>1272.24</TableCell>
+            <TableCell>686.77</TableCell>
+            <TableCell>1521.95</TableCell>
+            <TableCell>1027.04</TableCell>
+            <TableCell>345.52</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>JSON + AES</TableCell>
-            <TableCell>3106.83</TableCell>
-            <TableCell>1944.30</TableCell>
-            <TableCell>4.06</TableCell>
-            <TableCell>2.80</TableCell>
-            <TableCell>5.53</TableCell>
+            <TableCell>1202.26</TableCell>
+            <TableCell>729.20</TableCell>
+            <TableCell>1521.98</TableCell>
+            <TableCell>1027.13</TableCell>
+            <TableCell>2021.41</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>JSON + GZip + AES</TableCell>
-            <TableCell>3156.80</TableCell>
-            <TableCell>1837.35</TableCell>
-            <TableCell>4.06</TableCell>
-            <TableCell>2.80</TableCell>
-            <TableCell>0.92</TableCell>
+            <TableCell>1214.72</TableCell>
+            <TableCell>690.95</TableCell>
+            <TableCell>1521.99</TableCell>
+            <TableCell>1027.10</TableCell>
+            <TableCell>345.27</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><strong>MSS Serializer</strong></TableCell>
-            <TableCell>3095.36</TableCell>
-            <TableCell>11014.81</TableCell>
-            <TableCell>4.65</TableCell>
-            <TableCell>8.11</TableCell>
-            <TableCell>8.38</TableCell>
+            <TableCell>1132.52</TableCell>
+            <TableCell>673.12</TableCell>
+            <TableCell>1522.30</TableCell>
+            <TableCell>1015.46</TableCell>
+            <TableCell>1587.78</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>MSS + GZip</TableCell>
-            <TableCell>3160.07</TableCell>
-            <TableCell>10860.29</TableCell>
-            <TableCell>4.65</TableCell>
-            <TableCell>8.11</TableCell>
-            <TableCell>0.94</TableCell>
+            <TableCell>1264.55</TableCell>
+            <TableCell>670.45</TableCell>
+            <TableCell>1522.32</TableCell>
+            <TableCell>1015.46</TableCell>
+            <TableCell>335.90</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>MSS + AES</TableCell>
-            <TableCell>3296.92</TableCell>
-            <TableCell>11131.33</TableCell>
-            <TableCell>4.65</TableCell>
-            <TableCell>8.11</TableCell>
-            <TableCell>8.38</TableCell>
+            <TableCell>1221.58</TableCell>
+            <TableCell>698.43</TableCell>
+            <TableCell>1522.35</TableCell>
+            <TableCell>1015.53</TableCell>
+            <TableCell>1587.81</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>MSS + GZip + AES</TableCell>
-            <TableCell>3194.67</TableCell>
-            <TableCell>10907.50</TableCell>
-            <TableCell>4.65</TableCell>
-            <TableCell>8.11</TableCell>
-            <TableCell>0.94</TableCell>
+            <TableCell>1193.12</TableCell>
+            <TableCell>673.86</TableCell>
+            <TableCell>1522.37</TableCell>
+            <TableCell>1015.50</TableCell>
+            <TableCell>335.69</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><strong>XML Serializer</strong></TableCell>
-            <TableCell>3049.19</TableCell>
-            <TableCell>11391.31</TableCell>
-            <TableCell>4.06</TableCell>
-            <TableCell>9.80</TableCell>
-            <TableCell>13.55</TableCell>
+            <TableCell>1181.43</TableCell>
+            <TableCell>1279.97</TableCell>
+            <TableCell>1521.94</TableCell>
+            <TableCell>1549.80</TableCell>
+            <TableCell>3095.65</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>XML + GZip</TableCell>
-            <TableCell>3154.87</TableCell>
-            <TableCell>11460.43</TableCell>
-            <TableCell>4.06</TableCell>
-            <TableCell>9.80</TableCell>
-            <TableCell>1.06</TableCell>
+            <TableCell>1281.60</TableCell>
+            <TableCell>1383.47</TableCell>
+            <TableCell>1521.96</TableCell>
+            <TableCell>1549.81</TableCell>
+            <TableCell>367.94</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>XML + AES</TableCell>
-            <TableCell>3324.35</TableCell>
-            <TableCell>11699.04</TableCell>
-            <TableCell>4.06</TableCell>
-            <TableCell>9.80</TableCell>
-            <TableCell>13.55</TableCell>
+            <TableCell>1244.31</TableCell>
+            <TableCell>1338.62</TableCell>
+            <TableCell>1521.99</TableCell>
+            <TableCell>1549.88</TableCell>
+            <TableCell>3095.67</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>XML + GZip + AES</TableCell>
-            <TableCell>3173.43</TableCell>
-            <TableCell>11471.11</TableCell>
-            <TableCell>4.06</TableCell>
-            <TableCell>9.80</TableCell>
-            <TableCell>1.06</TableCell>
+            <TableCell>1252.34</TableCell>
+            <TableCell>1331.05</TableCell>
+            <TableCell>1522.00</TableCell>
+            <TableCell>1549.88</TableCell>
+            <TableCell>367.97</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+
+      <Heading size="h2">Performance Results (IL2CPP)</Heading>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Configuration</TableHead>
+            <TableHead>Save Time (ms)</TableHead>
+            <TableHead>Load Time (ms)</TableHead>
+            <TableHead>Save GC (KB)</TableHead>
+            <TableHead>Load GC (KB)</TableHead>
+            <TableHead>File Size (KB)</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell><strong>JSON Serializer</strong></TableCell>
+            <TableCell>3352.99</TableCell>
+            <TableCell>777.00</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1260.00</TableCell>
+            <TableCell>2017.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>JSON + GZip</TableCell>
+            <TableCell>3300.11</TableCell>
+            <TableCell>730.50</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1260.00</TableCell>
+            <TableCell>348.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>JSON + AES</TableCell>
+            <TableCell>3300.66</TableCell>
+            <TableCell>768.40</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1260.00</TableCell>
+            <TableCell>2017.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>JSON + GZip + AES</TableCell>
+            <TableCell>3287.10</TableCell>
+            <TableCell>729.20</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1260.00</TableCell>
+            <TableCell>348.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><strong>MSS Serializer</strong></TableCell>
+            <TableCell>3224.02</TableCell>
+            <TableCell>684.56</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1250.00</TableCell>
+            <TableCell>1587.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>MSS + GZip</TableCell>
+            <TableCell>3299.41</TableCell>
+            <TableCell>671.02</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1250.00</TableCell>
+            <TableCell>338.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>MSS + AES</TableCell>
+            <TableCell>3332.34</TableCell>
+            <TableCell>692.15</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1250.00</TableCell>
+            <TableCell>1587.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>MSS + GZip + AES</TableCell>
+            <TableCell>3290.42</TableCell>
+            <TableCell>667.11</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1250.00</TableCell>
+            <TableCell>338.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><strong>XML Serializer</strong></TableCell>
+            <TableCell>3334.52</TableCell>
+            <TableCell>935.65</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1720.00</TableCell>
+            <TableCell>3092.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>XML + GZip</TableCell>
+            <TableCell>3386.16</TableCell>
+            <TableCell>979.41</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1720.00</TableCell>
+            <TableCell>369.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>XML + AES</TableCell>
+            <TableCell>3376.09</TableCell>
+            <TableCell>996.34</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1720.00</TableCell>
+            <TableCell>3092.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>XML + GZip + AES</TableCell>
+            <TableCell>3653.29</TableCell>
+            <TableCell>942.90</TableCell>
+            <TableCell>1820.00</TableCell>
+            <TableCell>1720.00</TableCell>
+            <TableCell>369.00</TableCell>
           </TableRow>
         </TableBody>
       </Table>
