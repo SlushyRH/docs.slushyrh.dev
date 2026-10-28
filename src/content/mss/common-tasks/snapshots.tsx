@@ -5,14 +5,14 @@ function Content() {
   return (
     <>
       <Heading>Title</Heading>
-      <Paragraph>Paragraph</Paragraph>
+      <Paragraph>talk about how to use ISnapshots</Paragraph>
     </>
   )
 }
 
 export const page: DocPageMeta = {
-  label: 'Scriptable Objects',
-  section: 'modules',
+  label: 'Snapshots',
+  section: 'guides',
   order: 0,
   Content: Content,
 }

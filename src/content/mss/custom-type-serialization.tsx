@@ -62,6 +62,8 @@ function Content({ project }: { project: ProjectMeta }) {
         </TableBody>
       </Table>
 
+      <Paragraph>Add a new 'FormerSerializedKey(string[])', and basically it will make it so if there isn't the SerializedKey, it will try find any key that matches one of the array and load that into the variable.</Paragraph>
+
       <Heading size="h2">Custom Type Converters</Heading>
       <Paragraph>
         For third-party assets, Unity built-in components, or complex objects where you cannot modify the source code to add attributes, you can implement a Custom Type Converter.

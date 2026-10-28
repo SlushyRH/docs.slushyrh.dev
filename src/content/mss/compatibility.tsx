@@ -158,7 +158,7 @@ function Content({ project }: { project: ProjectMeta }) {
       </Paragraph>
 
       <Paragraph>
-        If you are a registered developer under NDA and need architectural advice on implementing these interfaces for a specific console, please reach out via our <Link to={`/${project.id}/support`}>support channels</Link>. We are fully available to guide you through the integration process as much as we can.
+        If you are a registered developer under NDA and need architectural advice on implementing these interfaces for a specific console, please reach out via our <Link to={`/${project.id}/intro/support`}>support channels</Link>. We are fully available to guide you through the integration process as much as we can.
       </Paragraph>
     </>
   )
