@@ -20,6 +20,9 @@ for (const filePath in metaModules) {
   const pathParts = filePath.split('/'); 
   const projectId = pathParts[1];
 
+  if (mod.default.hidden)
+    continue;
+
   if (pathParts.length === 3) {
     projects[projectId] = { ...mod.default, id: projectId } as ProjectMeta;
   }
@@ -52,6 +55,9 @@ for (const filePath in pageModules) {
     : [...folderDirectories, pageSlug].filter(Boolean).join('/');
     
   const uniqueKey = `${projectId}/${relativeUrlPath}`;
+
+  if (mod.page.hidden)
+    continue;
 
   allPages[uniqueKey] = {
     path: relativeUrlPath,    // This powers the clean slug: /id/folder/page

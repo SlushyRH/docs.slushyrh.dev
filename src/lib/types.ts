@@ -19,6 +19,7 @@ export interface DocSectionMeta {
 export interface ProjectMeta {
   id?: string;
   logoUrl?: string;
+  hiddden?: boolean;
   title: string;
   redirectSlug: string;
   sections?: DocSectionMeta[] | null;
@@ -32,4 +33,5 @@ export interface DocPageMeta {
   section?: string;
   description?: string;
   plainText?: string;
+  hidden?: boolean;
 }
