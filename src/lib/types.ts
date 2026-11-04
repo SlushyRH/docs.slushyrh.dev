@@ -28,7 +28,8 @@ export interface ProjectMeta {
 
 export interface DocPageMeta {
   label: string;
-  Content: React.FC<{project: ProjectMeta}>;
+  Content?: React.FC<{project: ProjectMeta}>;
+  redirect?: string;
   order?: number;
   section?: string;
   description?: string;

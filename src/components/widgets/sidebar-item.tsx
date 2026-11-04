@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LuChevronDown, LuChevronRight } from "react-icons/lu";
+import { LuChevronDown, LuChevronRight, LuExternalLink } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
 import { Button } from "../ui";
 import { capitalizeWords, cn } from "@/lib/utils";
@@ -11,12 +11,35 @@ function cleanPath(path: string) {
     .join('/');
 }
 
-function SidebarButton({ label, to, onClose, className }: { label: string, to: string, onClose?: () => void, className?: string }) {
+function SidebarButton({ label, to, redirect, onClose, className }: { label: string, to: string, redirect?: string, onClose?: () => void, className?: string }) {
+  const button = (
+    <Button
+      variant="ghost"
+      className={cn(
+        "w-full justify-start transition-colors h-9 py-1.5",
+        "text-text/60",
+        redirect ? "justify-between" : "",
+        className
+      )}
+    >
+      <span className="ml-1">{label}</span>
+      {redirect && <LuExternalLink className="h-4 w-4 shrink-0" aria-label="External" />}
+    </Button>
+  );
+
+  if (redirect) {
+    return (
+      <a href={redirect} target="_blank" rel="noopener noreferrer" onClick={onClose} className="block">
+        {button}
+      </a>
+    );
+  }
+
   return (
     <NavLink to={to} onClick={onClose} end className="block">
       {({ isActive }) => (
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           className={cn(
             "w-full justify-start transition-colors h-9 py-1.5",
             isActive ? "text-accent" : "text-text/60",
@@ -38,6 +61,7 @@ export default function SidebarItem({ item, projectId, onClose }: { item: any, p
       <SidebarButton 
         label={item.label} 
         to={`/${projectId}/${cleanPath(item.path)}`} 
+        redirect={item.redirect}
         onClose={onClose} 
       />   
     );
@@ -52,6 +76,7 @@ export default function SidebarItem({ item, projectId, onClose }: { item: any, p
               <SidebarButton 
                 label={item.label} 
                 to={`/${projectId}/${item.indexPage.path}`}
+                redirect={item.indexPage.redirect}
                 onClose={() => {
                   setIsOpen(prev => !prev);
                   onClose?.();

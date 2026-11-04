@@ -2,7 +2,7 @@ import type { ProjectMeta } from "@/lib/types";
 
 const projectMeta: ProjectMeta = {
   title: 'Modular Save System',
-  redirectSlug: 'intro',
+  redirectSlug: 'overview',
   sections: [
     { id: 'overview', label: 'Overview' },
     { id: 'guides', label: 'Guides' },
