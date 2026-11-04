@@ -30,7 +30,7 @@ export function DocViewerPage() {
 
   if (!targetPage) {
     const childPages = Object.values(allPages).filter(
-      p => p.projectId === projectId && p.path.startsWith(`${docPath}/`)
+      p => p.projectId === projectId && !p.data.redirect && p.path.startsWith(`${docPath}/`)
     );
 
     if (childPages.length > 0) {
@@ -112,9 +112,9 @@ export function DocViewerPage() {
   function flattenNodes(items: any[]) {
     items.forEach(node => {
       if (node.type === 'folder') {
-        if (node.indexPage) flatPages.push(node.indexPage);
+        if (node.indexPage && !node.indexPage.redirect) flatPages.push(node.indexPage);
         flattenNodes(node.items);
-      } else {
+      } else if (!node.redirect) {
         flatPages.push(node);
       }
     });
@@ -146,7 +146,13 @@ export function DocViewerPage() {
         <main className="flex-1 min-w-0 p-8 lg:p-12 flex justify-center">
           <div className="w-full max-w-4xl flex flex-col h-full">
             <article className="prose prose-invert max-w-none flex-1">
-              <PageContent project={projectMeta} />
+              {PageContent ? (
+                <PageContent project={projectMeta} />
+              ) : targetPage.data.redirect ? (
+                <a href={targetPage.data.redirect} target="_blank" rel="noopener noreferrer">
+                  Open {targetPage.data.label}
+                </a>
+              ) : undefined}
             </article>
 
             <Pagination projectId={projectId!} prevPage={prevPage} nextPage={nextPage} />

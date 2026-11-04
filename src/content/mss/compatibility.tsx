@@ -57,30 +57,30 @@ function Content({ project }: { project: ProjectMeta }) {
           <TableRow>
             <TableCell>Windows</TableCell>
             <TableCell>
-              <div className="flex items-center gap-2 text-yellow-500">
-                <LuTriangleAlert size={20} />
-                <span>Planned</span>
+              <div className="flex items-center gap-2 text-green-500">
+                <LuSquareCheckBig size={20} />
+                <span>Supported</span>
               </div>
             </TableCell>
             <TableCell>
-              <div className="flex items-center gap-2 text-yellow-500">
-                <LuTriangleAlert size={20} />
-                <span>Planned</span>
+              <div className="flex items-center gap-2 text-green-500">
+                <LuSquareCheckBig size={20} />
+                <span>Supported</span>
               </div>
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>macOS</TableCell>
             <TableCell>
-              <div className="flex items-center gap-2 text-yellow-500">
-                <LuTriangleAlert size={20} />
-                <span>Planned</span>
+              <div className="flex items-center gap-2 text-green-500">
+                <LuSquareCheckBig size={20} />
+                <span>Supported</span>
               </div>
             </TableCell>
             <TableCell>
-              <div className="flex items-center gap-2 text-yellow-500">
-                <LuTriangleAlert size={20} />
-                <span>Planned</span>
+              <div className="flex items-center gap-2 text-green-500">
+                <LuSquareCheckBig size={20} />
+                <span>Supported</span>
               </div>
             </TableCell>
           </TableRow>
@@ -102,15 +102,18 @@ function Content({ project }: { project: ProjectMeta }) {
           <TableRow>
             <TableCell>Android</TableCell>
             <TableCell>
-              <div className="flex items-center gap-2 text-yellow-500">
-                <LuTriangleAlert size={20} />
-                <span>Planned</span>
+              <div className="flex flex-col gap-2 text-orange-500">
+                <div className="flex items-center gap-2">
+                  <LuTriangleAlert size={20} />
+                 <span>Not Supported</span>
+                </div>
+                <span className="text-xs">Google Play Store mandates IL2CPP so support for Mono Backend is nullified.</span>
               </div>
             </TableCell>
             <TableCell>
-              <div className="flex items-center gap-2 text-yellow-500">
-                <LuTriangleAlert size={20} />
-                <span>Planned</span>
+              <div className="flex items-center gap-2 text-green-500">
+                <LuSquareCheckBig size={20} />
+                <span>Supported</span>
               </div>
             </TableCell>
           </TableRow>
@@ -118,9 +121,12 @@ function Content({ project }: { project: ProjectMeta }) {
             <TableCell>iOS</TableCell>
             <TableCell className="text-gray-400 italic">N/A</TableCell>
             <TableCell>
-              <div className="flex items-center gap-2 text-yellow-500">
-                <LuTriangleAlert size={20} />
-                <span>Planned</span>
+              <div className="flex flex-col gap-2 text-orange-500">
+                <div className="flex items-center gap-2">
+                  <LuSquareCheckBig size={20} />
+                <span>Supported (Manual QA)</span>
+                </div>
+                <span className="text-xs">Verified via functional demo scenes; automated test suites are excluded due to iOS tooling limitations.</span>
               </div>
             </TableCell>
           </TableRow>
@@ -128,9 +134,9 @@ function Content({ project }: { project: ProjectMeta }) {
             <TableCell>WebGL</TableCell>
             <TableCell className="text-gray-400 italic">N/A</TableCell>
             <TableCell>
-              <div className="flex items-center gap-2 text-yellow-500">
-                <LuTriangleAlert size={20} />
-                <span>Planned</span>
+              <div className="flex items-center gap-2 text-green-500">
+                <LuSquareCheckBig size={20} />
+                <span>Supported</span>
               </div>
             </TableCell>
           </TableRow>
