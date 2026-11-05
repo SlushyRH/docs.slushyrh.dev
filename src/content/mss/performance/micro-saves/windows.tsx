@@ -1,100 +1,63 @@
-import { Paragraph, Heading, Table, TableHeader, TableHead, TableBody, TableCell, TableRow, Alert } from "@/components/ui";
+import { Heading, Table, TableHeader, TableHead, TableBody, TableCell, TableRow, Alert } from "@/components/ui";
 import { List } from "@/components/ui/list";
 import type { DocPageMeta } from "@/lib/types";
+
+function ResultsTable({ rows }: { rows: Array<[string, string, string, string, string, string]> }) {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Configuration</TableHead>
+          <TableHead>Save Time (ms)</TableHead>
+          <TableHead>Load Time (ms)</TableHead>
+          <TableHead>Save GC (KB)</TableHead>
+          <TableHead>Load GC (KB)</TableHead>
+          <TableHead>File Size (KB)</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {rows.map(([configuration, saveTime, loadTime, saveGc, loadGc, fileSize]) => (
+          <TableRow key={configuration}>
+            <TableCell>{configuration}</TableCell>
+            <TableCell>{saveTime}</TableCell>
+            <TableCell>{loadTime}</TableCell>
+            <TableCell>{saveGc}</TableCell>
+            <TableCell>{loadGc}</TableCell>
+            <TableCell>{fileSize}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
 
 function Content() {
   return (
     <>
       <Heading>Micro Saves (Windows)</Heading>
-      <Paragraph>
-        The following benchmarks reflect performance on a Standalone Windows 64 build. Because these operations are lightweight, the test measures 100 iterations to accurately capture pipeline overhead like stream initialization and encryption.
-      </Paragraph>
       <List type="unordered">
         <span><strong>CPU:</strong> Intel Core i5-9600K @ 3.70GHz</span>
         <span><strong>RAM:</strong> 32 GB</span>
         <span><strong>OS:</strong> Windows 11</span>
-        <span><strong>Context:</strong> Standalone Windows 64</span>
       </List>
 
       <Heading size="h2">Performance Results (Mono)</Heading>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Configuration</TableHead>
-            <TableHead>Save Time (ms)</TableHead>
-            <TableHead>Load Time (ms)</TableHead>
-            <TableHead>Save GC (KB)</TableHead>
-            <TableHead>Load GC (KB)</TableHead>
-            <TableHead>File Size (KB)</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell><strong>MSS Micro Save (Json)</strong></TableCell>
-            <TableCell>468.59</TableCell>
-            <TableCell>5.24</TableCell>
-            <TableCell>95.02</TableCell>
-            <TableCell>4.20</TableCell>
-            <TableCell>0.11</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>MSS Micro Save (Mss)</strong></TableCell>
-            <TableCell>428.47</TableCell>
-            <TableCell>4.89</TableCell>
-            <TableCell>95.31</TableCell>
-            <TableCell>4.20</TableCell>
-            <TableCell>0.22</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>MSS Micro Save (Xml)</strong></TableCell>
-            <TableCell>469.81</TableCell>
-            <TableCell>5.54</TableCell>
-            <TableCell>95.70</TableCell>
-            <TableCell>4.20</TableCell>
-            <TableCell>0.42</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      <ResultsTable
+        rows={[
+          ["JSON Serializer", "468.59", "5.24", "95.02", "4.20", "0.11"],
+          ["MSS Serializer", "428.47", "4.89", "95.31", "4.20", "0.22"],
+          ["XML Serializer", "469.81", "5.54", "95.70", "4.20", "0.42"],
+        ]}
+      />
 
       <Heading size="h2">Performance Results (IL2CPP)</Heading>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Configuration</TableHead>
-            <TableHead>Save Time (ms)</TableHead>
-            <TableHead>Load Time (ms)</TableHead>
-            <TableHead>Save GC (KB)</TableHead>
-            <TableHead>Load GC (KB)</TableHead>
-            <TableHead>File Size (KB)</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell><strong>MSS Micro Save (Json)</strong></TableCell>
-            <TableCell>465.44</TableCell>
-            <TableCell>4.51</TableCell>
-            <TableCell>102.90</TableCell>
-            <TableCell>4.30</TableCell>
-            <TableCell>0.11</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>MSS Micro Save (Mss)</strong></TableCell>
-            <TableCell>404.02</TableCell>
-            <TableCell>4.67</TableCell>
-            <TableCell>103.20</TableCell>
-            <TableCell>4.30</TableCell>
-            <TableCell>0.07</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>MSS Micro Save (Xml)</strong></TableCell>
-            <TableCell>431.98</TableCell>
-            <TableCell>4.68</TableCell>
-            <TableCell>103.60</TableCell>
-            <TableCell>4.30</TableCell>
-            <TableCell>0.24</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      <ResultsTable
+        rows={[
+          ["JSON Serializer", "465.44", "4.51", "102.90", "4.30", "0.11"],
+          ["MSS Serializer", "404.02", "4.67", "103.20", "4.30", "0.07"],
+          ["XML Serializer", "431.98", "4.68", "103.60", "4.30", "0.24"],
+        ]}
+      />
       
       <Alert type="info" noMargin>
         <strong>Note:</strong> To calculate the exact overhead per frame, execution times and GC allocations from the Unity Test Runner should be divided by the 100 iterations performed during the test.
