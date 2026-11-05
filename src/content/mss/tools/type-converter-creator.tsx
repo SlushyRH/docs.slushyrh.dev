@@ -118,8 +118,8 @@ function Content() {
             for a more accurate result; <Code>Rigidbody</Code> or <Code>UnityEngine.Rigidbody</Code>.
           </Paragraph>
           <Grid noMargin>
-            <Image src="/resources/tools/tcc-empty.png" caption="Default empty window." />
-            <Image src="/resources/tools/tcc-types.png" caption="All types that match search result." />
+            <Image src="/mss/tools/tcc-empty.png" caption="Default empty window." />
+            <Image src="/mss/tools/tcc-types.png" caption="All types that match search result." />
           </Grid>
         </Step>
         <Step>
@@ -128,8 +128,8 @@ function Content() {
             selecting the members you want to be serialized, just click the <Code>Create Type Converter</Code> button at the bottom and the file will be generated!
           </Paragraph>
           <Grid noMargin>
-            <Image src="/resources/tools/tcc-select-data-to-save.png" caption="Window with all available members to be serialized." />
-            <Image src="/resources/tools/tcc-create-type-converter.png" caption="All types that match search result." />
+            <Image src="/mss/tools/tcc-select-data-to-save.png" caption="Window with all available members to be serialized." />
+            <Image src="/mss/tools/tcc-create-type-converter.png" caption="All types that match search result." />
           </Grid>
         </Step>
         <Step>
