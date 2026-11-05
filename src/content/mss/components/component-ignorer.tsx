@@ -4,14 +4,14 @@ import type { DocPageMeta } from "@/lib/types";
 function Content() {
   return (
     <>
-      <Heading>Title</Heading>
+      <Heading>Component Ignorer</Heading>
       <Paragraph>Paragraph</Paragraph>
     </>
   )
 }
 
 export const page: DocPageMeta = {
-  label: 'Prefabs',
+  label: 'Component Ignorer',
   section: 'modules',
   order: 0,
   Content: Content,
