@@ -21,6 +21,7 @@ function Content() {
 export const page: DocPageMeta = {
   label: 'Limitations',
   order: 10,
+  hidden: true,
   section: 'overview',
   Content: Content
 }
