@@ -50,7 +50,7 @@ export function List({ children, type, className, noMargin, ...props }: ListProp
           return (
             <li 
               key={isValidElement(child) && child.key ? child.key : index} 
-              className="mb-1 text-text text-sm leading-relaxed marker:text-text/50"
+              className="mb-1 text-text leading-relaxed marker:text-text/50"
             >
               {child}
             </li>
