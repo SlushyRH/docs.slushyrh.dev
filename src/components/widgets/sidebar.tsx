@@ -107,7 +107,7 @@ export function Sidebar({ projectId, projectMeta, isOpen, onClose }: SidebarProp
         </>
       )}
 
-      <aside className={`fixed inset-y-0 bg-bg left-0 z-50 w-[75%] lg:w-80 transform overflow-y-auto border-r border-border p-4 transition-transform duration-300 ease-in-out lg:sticky lg:top-14 lg:z-0 lg:block lg:h-[calc(100vh-3.5rem)] ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+      <aside className={`sidebar-scrollbar fixed inset-y-0 bg-bg left-0 z-50 w-[75%] lg:w-80 transform overflow-y-auto border-r border-border p-4 transition-transform duration-300 ease-in-out lg:sticky lg:top-14 lg:z-0 lg:block lg:h-[calc(100vh-3.5rem)] ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         <div className="mb-6 flex items-center gap-2 lg:hidden">
           {projectMeta.logoUrl && (
             <img src={projectMeta.logoUrl} alt={`${projectMeta.title} logo`} className="h-6 w-6 object-contain" />
