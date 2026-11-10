@@ -33,6 +33,19 @@ public class ExampleCode : MonoBehaviour
         saveSystem.Load();
         clickCount = saveSystem.Get<int>(CC_KEY);
     }
+    
+    // ASYNC OVERLOAD VERSIONS
+    public async Awaitable SaveDataAsync()
+    {
+        await saveSystem.SetAsync<int>(CC_KEY, clickCount);
+        await saveSystem.SaveAsync();
+    }
+
+    public async Awaitable LoadDataAsync()
+    {
+        await saveSystem.LoadAsync();
+        clickCount = await saveSystem.GetAsync<int>(CC_KEY);
+    }
 }`;
 
 function Content() {
