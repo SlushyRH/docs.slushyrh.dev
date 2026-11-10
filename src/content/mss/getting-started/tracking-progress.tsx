@@ -4,15 +4,15 @@ import type { DocPageMeta } from "@/lib/types";
 function Content() {
   return (
     <>
-      <Heading>Custom Tasks</Heading>
-      <Paragraph>Paragraph</Paragraph>
+      <Heading>Title</Heading>
+      <Paragraph>mss progress</Paragraph>
     </>
   )
 }
 
 export const page: DocPageMeta = {
-  label: 'Common Tasks',
+  label: 'Tracking Progress',
   section: 'guides',
-  order: -100,
+  order: 7,
   Content: Content,
 }

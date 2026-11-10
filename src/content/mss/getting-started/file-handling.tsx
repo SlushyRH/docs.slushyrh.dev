@@ -5,14 +5,14 @@ function Content() {
   return (
     <>
       <Heading>Title</Heading>
-      <Paragraph>mss progress</Paragraph>
+      <Paragraph>Paragraph</Paragraph>
     </>
   )
 }
 
 export const page: DocPageMeta = {
-  label: 'Tracking Progress',
+  label: 'File Handling',
   section: 'guides',
-  order: 0,
+  order: 3,
   Content: Content,
 }

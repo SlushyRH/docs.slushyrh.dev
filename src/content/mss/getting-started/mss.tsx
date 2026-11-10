@@ -13,6 +13,6 @@ function Content() {
 export const page: DocPageMeta = {
   label: 'MSS',
   section: 'guides',
-  order: 0,
+  order: 4,
   Content: Content,
 }
