@@ -47,7 +47,7 @@ function Content() {
         
       </Paragraph>
 
-      <CodeBlock language="csharp" code={codeExample} />
+      <CodeBlock language="csharp" code={codeExample} allowCopy={false} />
     </>
   )
 }
